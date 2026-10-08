@@ -44,10 +44,10 @@ FETCHED = ('/vendor/', '/firmware/')   # copied into _site/ at deploy time (fetc
 def check_fetched(P):
     n = 0
     for u, s in P.items():
-        for path in re.findall(r'src="(/vendor/[^"#?]*)"', s):
+        for path in re.findall(r'\bsrc="(/vendor/[^"#?]*)"', s):
             if not os.path.exists(os.path.join(SITE, path.lstrip('/'))):
                 problems.append(f'{u}: missing {path}')
-        for path in re.findall(r'manifest="(/firmware/[^"]+)"', s):
+        for path in re.findall(r'\bmanifest="(/firmware/[^"]+)"', s):
             f = os.path.join(SITE, path.lstrip('/'))
             if not os.path.exists(f):
                 problems.append(f'{u}: missing flasher manifest {path}'); continue
