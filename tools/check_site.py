@@ -3,6 +3,7 @@
 
     python tools/check_site.py            # offline checks
     python tools/check_site.py --online   # + GitHub README anchors, YouTube videos, release tags
+    python tools/check_site.py --fetched  # after fetch_firmware.py + fetch_vendor.py (deploy)
 
 Offline: identical nav and footer on every page; no em-dash or en-dash in our copy (the strings
 quoted for translation review are product data and are skipped); every internal link and anchor
@@ -11,6 +12,8 @@ sitemap.xml lists exactly the indexable pages; every local image exists.
 Online: every github.com/<owner>/<repo>[/blob/main/<file>]#anchor points at a heading that exists
 on the default branch; every YouTube video is still public (oEmbed); every platform entry's
 release tag is a public, non-prerelease Release of its line (D40 point 4).
+Fetched: /vendor/ and /firmware/ are copied in at deploy time, after the first check, so they are
+skipped until --fetched; then every script, every flasher manifest and every part it lists exists.
 """
 import argparse, glob, io, json, os, re, sys, urllib.error, urllib.parse, urllib.request
 import yaml
@@ -35,6 +38,27 @@ def visible_text(html):
     return re.sub(r'<[^>]+>', ' ', html)
 
 
+FETCHED = ('/vendor/', '/firmware/')   # copied into _site/ at deploy time (fetch_vendor/fetch_firmware)
+
+
+def check_fetched(P):
+    n = 0
+    for u, s in P.items():
+        for path in re.findall(r'src="(/vendor/[^"#?]*)"', s):
+            if not os.path.exists(os.path.join(SITE, path.lstrip('/'))):
+                problems.append(f'{u}: missing {path}')
+        for path in re.findall(r'manifest="(/firmware/[^"]+)"', s):
+            f = os.path.join(SITE, path.lstrip('/'))
+            if not os.path.exists(f):
+                problems.append(f'{u}: missing flasher manifest {path}'); continue
+            n += 1
+            for b in json.load(io.open(f, encoding='utf-8'))['builds']:
+                for part in b['parts']:
+                    if not os.path.exists(os.path.join(os.path.dirname(f), part['path'])):
+                        problems.append(f'{path}: missing part {part["path"]}')
+    print(f'fetched: {n} flasher manifests checked')
+
+
 def check_offline(P, base):
     ids = {u: set(re.findall(r'\bid="([^"]+)"', s)) for u, s in P.items()}
     navs = {re.search(r'<nav class="nav".*?</nav>', s, re.S).group(0).replace(' aria-current="page"', '') for s in P.values()}
@@ -55,6 +79,8 @@ def check_offline(P, base):
         if 'property="og:image"' not in s: problems.append(f'{u}: no og:image')
         for h in re.findall(r'(?:href|src)="(/[^"#?]*)(?:#([^"]*))?"', s):
             path, frag = h
+            if path.startswith(FETCHED):
+                continue   # checked by --fetched, once the deploy has copied them in
             if path.startswith('/assets/') or path.startswith('/translate/files/') or path.endswith(('.xml', '.txt')):
                 if not os.path.exists(os.path.join(SITE, path.lstrip('/'))):
                     problems.append(f'{u}: missing file {path}')
@@ -123,6 +149,7 @@ def check_online(P, owner):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--online', action='store_true')
+    ap.add_argument('--fetched', action='store_true')
     args = ap.parse_args()
     if not os.path.isdir(SITE):
         sys.exit('no _site/: run build.py first')
@@ -131,6 +158,8 @@ def main():
     check_offline(P, site['base_url'])
     if args.online:
         check_online(P, site['github_owner'])
+    if args.fetched:
+        check_fetched(P)
     print(f'{len(P)} pages checked')
     if problems:
         print(f'{len(problems)} problem(s):')

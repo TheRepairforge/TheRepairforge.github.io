@@ -28,9 +28,12 @@ jobs:
       - run: python build.py
       - run: python tools/check_site.py --online
       # While the repository is private the site is built and checked, never published.
-      - name: Firmware for the web flasher
+      - name: Firmware and ESP Web Tools for the web flasher
         if: ${{ !github.event.repository.private }}
-        run: python tools/fetch_firmware.py
+        run: |
+          python tools/fetch_firmware.py
+          python tools/fetch_vendor.py
+          python tools/check_site.py --fetched
       - uses: actions/upload-pages-artifact@v5
         if: ${{ !github.event.repository.private }}
         with:

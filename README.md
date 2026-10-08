@@ -26,10 +26,11 @@ an earlier online build.
 | `site.yml` | navigation, footer, translation review languages, `draft` switch |
 | `assets/` | stylesheet, fonts, images, icons |
 | `tools/check_site.py` | checks run before every deploy (links, anchors, SEO tags, videos, release tags) |
-| `tools/fetch_firmware.py` | copies the web flasher's firmware from the tools' Releases at deploy time |
+| `tools/fetch_firmware.py` | copies the web flasher's firmware parts from the tools' Releases at deploy time and writes one ESP Web Tools manifest per build |
+| `tools/fetch_vendor.py` | self-hosts ESP Web Tools at deploy time (pinned version, npm integrity checked) |
 | `.github/workflows/deploy.yml` | build, check, fetch firmware, deploy to GitHub Pages |
 
-`_site/`, `.cache/` and `firmware/` are build output and never committed.
+`_site/` (with its `firmware/` and `vendor/`) and `.cache/` are build output and never committed.
 
 ## Adding a battery platform
 
@@ -43,5 +44,5 @@ published: a rename gets a redirect page, never a deletion.
 ## Licence
 
 Site text and images: CC BY-NC-SA 4.0 (see `LICENSE`). Fonts: Archivo and JetBrains Mono, SIL
-Open Font License. Icons: Phosphor, MIT. The tools themselves are licensed in their own
+Open Font License. Icons: Phosphor, MIT. Web flasher: ESP Web Tools, Apache-2.0 (licence copied next to it at deploy). The tools themselves are licensed in their own
 repositories.

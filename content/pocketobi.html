@@ -46,11 +46,26 @@ nav: pocketobi
       <h2>Flash the firmware</h2>
       <p>Plug the board in with a data USB cable, pick your board, click Install.</p>
       <div class="flasher">
-        <!-- ESP Web Tools buttons go here (PLAN.md 5.3), one manifest per board. Placeholders in the draft. -->
+        <!-- ESP Web Tools (PLAN.md 5.3): one manifest per build, written at deploy time by tools/fetch_firmware.py.
+             Each manifest names one chip family, so a board of the wrong type is refused, not flashed. -->
         <div class="btn-row">
-          <a class="btn btn-primary" href="#flash" aria-disabled="true">Install on ESP32-C3</a>
-          <a class="btn btn-plain" href="#flash" aria-disabled="true">Install on CYD</a>
+          <esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3/manifest.json">
+            <button slot="activate" class="btn btn-primary">Install on ESP32-C3</button>
+            <span slot="unsupported" class="note">This browser can't flash a board: use Chrome or Edge on a computer.</span>
+            <span slot="not-allowed" class="note">Flashing needs a secure (https) page.</span>
+          </esp-web-install-button>
+          <esp-web-install-button manifest="/firmware/PocketOBI/cyd/manifest.json">
+            <button slot="activate" class="btn btn-plain">Install on CYD</button>
+            <span slot="unsupported"></span>
+            <span slot="not-allowed"></span>
+          </esp-web-install-button>
         </div>
+        <p class="note">Japanese firmware (日本語):
+          <esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3-ja/manifest.json"><button slot="activate" class="link-btn">ESP32-C3</button><span slot="unsupported">ESP32-C3</span><span slot="not-allowed">ESP32-C3</span></esp-web-install-button>
+          <span class="muted">or</span>
+          <esp-web-install-button manifest="/firmware/PocketOBI/cyd-ja/manifest.json"><button slot="activate" class="link-btn">CYD</button><span slot="unsupported">CYD</span><span slot="not-allowed">CYD</span></esp-web-install-button>.
+          The other builds carry English, French, German and Spanish.</p>
+        <script type="module" src="/vendor/esp-web-tools/install-button.js"></script>
         <p class="note">Works in Chrome and Edge on a computer. Anywhere else, download the firmware from the <a href="https://github.com/TheRepairforge/PocketOBI/releases/latest">latest release</a> and flash it with esptool, or <a href="https://github.com/TheRepairforge/PocketOBI#build--flash">build it from source</a>.</p>
         <p class="note">Firmware licensed <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>. <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/THIRD-PARTY.md">Third-party components</a>.</p>
       </div>
