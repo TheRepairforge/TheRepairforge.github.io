@@ -1,0 +1,81 @@
+---
+title: "PocketOBI: a DIY Makita LXT battery tester and unlocker"
+title_suffix: true
+description: "PocketOBI reads Makita LXT 18 V batteries, gives a verdict and clears false lockouts. Build it on an ESP32-C3 or a CYD, then flash it from your browser."
+path: "pocketobi/"
+nav: pocketobi
+---
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <img class="tool-logo logo-dark" src="/assets/img/pocketobi-dark.png" alt="PocketOBI" width="900" height="163" style="height:44px;width:auto;margin-bottom:28px">
+        <img class="tool-logo logo-light" src="/assets/img/pocketobi-light.png" alt="PocketOBI" width="900" height="163" style="height:44px;width:auto;margin-bottom:28px">
+        <h1>A Makita battery tester you build yourself.</h1>
+        <p class="lead">Reads Makita LXT 18&nbsp;V batteries, gives one verdict, and clears false lockouts. An ESP32, a screen and a knob. No PC.</p>
+        <div class="actions btn-row">
+          <a class="btn btn-primary" href="/guides/#build">Build guide <span class="i i-right" aria-hidden="true"></span></a>
+          <a class="btn btn-plain" href="#flash">Flash the firmware</a>
+        </div>
+      </div>
+      <figure><img class="screen" src="/assets/img/screens/po-launcher.png" alt="PocketOBI home screen: Battery, Repair, Tools, About" width="640" height="480" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="section" id="boards">
+    <div class="wrap">
+      <h2>Pick a board</h2>
+      <div class="boards">
+        <div>
+          <div class="ph r43"><span><strong>Photo B2</strong>Kit flat lay: PCB, ESP32-C3 SuperMini, screen and encoder, adapter, the BOM parts.</span></div>
+          <h3 style="margin-top:22px">ESP32-C3 on the carrier PCB</h3>
+          <p>The reference build. A rotary knob and a back button, a two-layer board with a handful of hand-solderable parts. Fabricated and bench-validated.</p>
+          <p><a href="/guides/#build">Build guide</a> <span class="muted">and</span> <a href="https://www.printables.com/model/1833871-pocketobi-makita-18v-lxt-battery-diagnostic-tool-c">the printed case on Printables</a></p>
+        </div>
+        <div>
+          <img class="photo" src="/assets/img/cyd-board.jpg" alt="The CYD board, back side, with the CN1 connector marked" width="903" height="1200" loading="lazy">
+          <h3 style="margin-top:22px">CYD (ESP32-2432S028R)</h3>
+          <p>The "Cheap Yellow Display": same firmware, a touch screen, less soldering. Boards vary between batches, so check yours against the notes first.</p>
+          <p><a href="/guides/#build-cyd">CYD guide</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="flash">
+    <div class="wrap">
+      <h2>Flash the firmware</h2>
+      <p>Plug the board in with a data USB cable, pick your board, click Install.</p>
+      <div class="flasher">
+        <!-- ESP Web Tools buttons go here (PLAN.md 5.3), one manifest per board. Placeholders in the draft. -->
+        <div class="btn-row">
+          <a class="btn btn-primary" href="#flash" aria-disabled="true">Install on ESP32-C3</a>
+          <a class="btn btn-plain" href="#flash" aria-disabled="true">Install on CYD</a>
+        </div>
+        <p class="note">Works in Chrome and Edge on a computer. Anywhere else, download the firmware from the <a href="https://github.com/TheRepairforge/PocketOBI/releases/latest">latest release</a> and flash it with esptool, or <a href="https://github.com/TheRepairforge/PocketOBI#build--flash">build it from source</a>.</p>
+        <p class="note">Firmware licensed <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>. <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/THIRD-PARTY.md">Third-party components</a>.</p>
+      </div>
+
+      <h3 style="margin-top:44px">If it doesn't go as planned</h3>
+      <ul class="reads">
+        <li><strong>Board not detected.</strong> On the ESP32-C3, hold BOOT while plugging it in. On Windows the CYD may need the CH340 USB driver.</li>
+        <li><strong>Erase device</strong> wipes the saved language and the touch calibration. Leave it unticked for an update.</li>
+        <li><strong>Which version is on it?</strong> The About screen shows it.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section tight">
+    <div class="wrap split">
+      <a class="video" href="https://youtu.be/8Qe2dTXrJ8g">
+        <span class="thumb"><img src="/assets/img/yt-8Qe2dTXrJ8g.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+        <span class="title">Your makita battery remembers everything you did to it!</span>
+        <span class="what">The tool screen by screen, then the whole build: parts, PCB, assembly, firmware.</span>
+      </a>
+      <div>
+        <h2>Everything else is on GitHub</h2>
+        <p>The source, the hardware files, the release notes and the full documentation live in the repository.</p>
+        <a class="btn btn-plain" href="https://github.com/TheRepairforge/PocketOBI">PocketOBI on GitHub <span class="i i-out" aria-hidden="true"></span></a>
+        <p class="muted" style="margin-top:28px">Next: <a href="/packscope/">read your packs on a PC with PackScope</a>.</p>
+      </div>
+    </div>
+  </section>

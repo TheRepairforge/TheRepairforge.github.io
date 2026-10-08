@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }}{% if page.title_suffix %} | {{ site.name }}{% endif %}</title>
+{% if page.description %}<meta name="description" content="{{ page.description }}">
+{% endif %}{% if page.noindex %}<meta name="robots" content="noindex">
+{% else %}<link rel="canonical" href="{{ site.base_url }}/{{ page.path }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:url" content="{{ site.base_url }}/{{ page.path }}">
+<meta property="og:image" content="{{ site.base_url }}{{ page.og_image or site.og_image }}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+{% endif %}<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/site.css">
+{% if page.jsonld %}<script type="application/ld+json">{{ page.jsonld }}</script>
+{% endif %}</head>
+<body>
+{% if site.draft %}<div class="draft-strip">Draft for review, not published.</div>
+{% endif %}<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="{{ site.name }}, home">
+      <img class="logo-dark" src="/assets/img/repairforge-dark.png" alt="{{ site.name }}" width="883" height="355">
+      <img class="logo-light" src="/assets/img/repairforge-light.png" alt="{{ site.name }}" width="883" height="355">
+    </a>
+    <nav class="nav" aria-label="Main">
+{% for item in nav %}      <a href="{{ item.href }}"{% if item.key == page.nav %} aria-current="page"{% endif %}>{{ item.label }}</a>
+{% endfor %}    </nav>
+  </div>
+</header>
+
+<main>
+{% block main %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      <p>{{ site.footer.generic }} {% for p in platforms %}{{ p.trademark_short }} {% endfor %}{{ site.footer.disclaimer }}</p>
+      <p>{{ site.footer.licences }}</p>
+    </div>
+    <ul>
+{% for l in site.footer.links %}      <li><a href="{{ l.href }}">{{ l.label }}</a></li>
+{% endfor %}    </ul>
+  </div>
+</footer>
+</body>
+</html>

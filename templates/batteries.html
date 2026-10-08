@@ -1,0 +1,13 @@
+{#- Index of battery platforms: generated only when there are two or more (D40 point 7). -#}
+{% extends "base.html" %}
+{% block main %}
+  <section class="section tight">
+    <div class="wrap">
+      <h1>Batteries</h1>
+      <p class="lead">Pick the platform of your battery.</p>
+      <ul class="doc-links">
+{% for p in platforms %}        <li><a href="/{{ p.slug }}/"><span class="i i-right" aria-hidden="true"></span><span>{{ p.nav_label }}</span></a></li>
+{% endfor %}      </ul>
+    </div>
+  </section>
+{% endblock %}

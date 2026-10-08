@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block main %}
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Do you speak {{ lang_names }}? Help fix the translations.</h1>
+        <p class="lead">PocketOBI and PackScope speak several languages. English and French are ours; {{ lang_names_and }} are first drafts no native speaker has checked yet.</p>
+        <div class="actions"><a class="btn btn-primary" href="#languages">Pick a language <span class="i i-right" aria-hidden="true"></span></a></div>
+      </div>
+      <figure><img class="screen" src="/assets/img/screens/po-repair-lock.png" alt="A PocketOBI repair screen" width="640" height="480"></figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <div class="checks">
+        <div><h3>Look at the screens</h3><p>Each language page shows every device screen and the main app screens as they are today.</p></div>
+        <div><h3>Fix one string, or all of them</h3><p>Next to each string, <strong>Suggest a fix</strong> opens a GitHub issue already filled in: you only type your version. For a full pass, download the spreadsheet, fill the suggestion column and attach it to an issue.</p></div>
+        <div><h3>We check it on the real screen</h3><p>Every accepted fix is rendered on the device screen before it ships, so a long word never ends up cut off. You are credited in the release notes if you want to be.</p></div>
+      </div>
+      <p class="muted">You need a free GitHub account to open an issue. Each tool has its own issue tracker, so a device string and an app string go to different places; the buttons pick the right one.</p>
+    </div>
+  </section>
+
+  <section class="section" id="languages">
+    <div class="wrap">
+      <h2>Pick a language</h2>
+      <ul class="doc-links">
+{% for l in langs %}        <li><a href="/translate/{{ l.code }}/"><span class="i i-right" aria-hidden="true"></span><span>{{ l.native }}</span></a> <span class="where">{{ l.name }}: {{ l.n_fw }} device strings, {{ l.n_ps }} app strings</span></li>
+{% endfor %}      </ul>
+    </div>
+  </section>
+{% endblock %}

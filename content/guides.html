@@ -1,0 +1,138 @@
+---
+title: "Build a tool to unlock Makita batteries: guides"
+title_suffix: true
+description: "Step by step: build PocketOBI, flash the firmware from your browser, read your first Makita battery, clear a false lockout. Each guide pairs the video with the docs."
+path: "guides/"
+nav: guides
+---
+  <section class="section tight">
+    <div class="wrap">
+      <h1>Guides</h1>
+      <p class="lead">From a bag of parts to a saved battery. Each guide shows the video, then opens the documentation where it lives, on GitHub.</p>
+      <ul class="guide-index">
+        <li><a href="#build">Build a PocketOBI</a></li>
+        <li><a href="#build-cyd">Build it on a CYD</a></li>
+        <li><a href="#flash">Put the firmware on it</a></li>
+        <li><a href="#packscope">Read batteries on your PC</a></li>
+        <li><a href="#your-battery">Steps for your battery</a></li>
+        <li><a href="#troubleshooting">Something doesn't work</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wrap">
+
+    <article class="guide" id="build">
+      <div>
+        <a class="video" href="https://youtu.be/8Qe2dTXrJ8g?t=238">
+          <span class="thumb"><img src="/assets/img/yt-8Qe2dTXrJ8g.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+          <span class="title">Your makita battery remembers everything you did to it!</span>
+          <span class="what">The full build, from 03:58.</span>
+        </a>
+        <ol class="chapters">
+          <li><a href="https://youtu.be/8Qe2dTXrJ8g?t=238"><span class="ts">03:58</span>The parts list</a></li>
+          <li><a href="https://youtu.be/8Qe2dTXrJ8g?t=348"><span class="ts">05:48</span>Ordering the PCB</a></li>
+          <li><a href="https://youtu.be/8Qe2dTXrJ8g?t=431"><span class="ts">07:11</span>The tools you need</a></li>
+          <li><a href="https://youtu.be/8Qe2dTXrJ8g?t=514"><span class="ts">08:34</span>Building it</a></li>
+          <li><a href="https://youtu.be/8Qe2dTXrJ8g?t=757"><span class="ts">12:37</span>Wiring, inserts and final assembly</a></li>
+          <li><a href="https://youtu.be/8Qe2dTXrJ8g?t=1037"><span class="ts">17:17</span>First power up</a></li>
+        </ol>
+      </div>
+      <div class="body">
+        <h2>Build a PocketOBI</h2>
+        <p>The reference build: an ESP32-C3 SuperMini on the PocketOBI carrier board, a 2.4" screen with a rotary encoder, and a Makita LXT adapter.</p>
+        <p class="need"><b>You need:</b> the carrier PCB (Gerbers are ready to upload), the parts on the BOM, an LXT adapter, a soldering iron and a USB-C cable.</p>
+        <p><strong>The one trap:</strong> identify DATA and ENABLE by the ESP32 silkscreen, not by the adapter's connector numbering. B+ is never connected.</p>
+        <ul class="doc-links">
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/hardware/README.md"><span class="i i-out" aria-hidden="true"></span><span>Order the PCB</span></a> <span class="where">PocketOBI / hardware / README.md</span></li>
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/hardware/PocketOBI-HW-BOM.csv"><span class="i i-out" aria-hidden="true"></span><span>Parts list</span></a> <span class="where">hardware / PocketOBI-HW-BOM.csv</span></li>
+          <li><a href="/makita-lxt/#wiring"><span class="i i-right" aria-hidden="true"></span><span>Wire the Makita LXT adapter</span></a></li>
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/HARDWARE.md"><span class="i i-out" aria-hidden="true"></span><span>Pinout and hardware notes</span></a> <span class="where">PocketOBI / HARDWARE.md</span></li>
+          <li><a href="https://www.printables.com/model/1833871-pocketobi-makita-18v-lxt-battery-diagnostic-tool-c"><span class="i i-out" aria-hidden="true"></span><span>Print the case</span></a> <span class="where">Printables</span></li>
+        </ul>
+        <p class="next">Next: <a href="#flash">Put the firmware on it</a></p>
+      </div>
+    </article>
+
+    <article class="guide" id="build-cyd">
+      <figure>
+        <img class="photo" src="/assets/img/cyd-board.jpg" alt="The CYD board (ESP32-2432S028R), with the BOOT button, the CN1 connector and the dual USB version marked" width="903" height="1200" loading="lazy" style="max-height:520px;width:auto;margin:0 auto">
+        <figcaption>The dual-USB CYD. The whole pack connection fits on CN1.</figcaption>
+      </figure>
+      <div class="body">
+        <h2>Build it on a CYD instead</h2>
+        <p>The "Cheap Yellow Display" runs the same firmware with a touch screen instead of the knob. Less soldering, but boards vary between batches. The ESP32-C3 build stays the reference.</p>
+        <p class="need"><b>You need:</b> an ESP32-2432S028R (dual-USB, ST7789 revision), two 470&nbsp;Ω resistors, an LXT adapter.</p>
+        <ul class="doc-links">
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/CYD_GUIDE.md"><span class="i i-out" aria-hidden="true"></span><span>The step-by-step CYD guide</span></a> <span class="where">PocketOBI / docs / CYD_GUIDE.md</span></li>
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/CYD_NOTES.md"><span class="i i-out" aria-hidden="true"></span><span>Which CYD to buy</span></a> <span class="where">PocketOBI / CYD_NOTES.md</span></li>
+        </ul>
+        <p class="next">Next: <a href="#flash">Put the firmware on it</a></p>
+      </div>
+    </article>
+
+    <article class="guide" id="flash">
+      <a class="video" href="https://youtu.be/8Qe2dTXrJ8g?t=708">
+        <span class="thumb"><img src="/assets/img/yt-8Qe2dTXrJ8g.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+        <span class="title">Your makita battery remembers everything you did to it!</span>
+        <span class="what">Flashing the firmware, at 11:48.</span>
+      </a>
+      <div class="body">
+        <h2>Put the firmware on it</h2>
+        <p>The fastest way is from this site: plug the board in, pick it, click Install. No toolchain to set up.</p>
+        <p class="need"><b>You need:</b> Chrome or Edge on a computer, and a USB cable that carries data (not a charge-only one).</p>
+        <ul class="doc-links">
+          <li><a href="/pocketobi/#flash"><span class="i i-right" aria-hidden="true"></span><span>Flash it from your browser</span></a></li>
+          <li><a href="https://github.com/TheRepairforge/PocketOBI#build--flash"><span class="i i-out" aria-hidden="true"></span><span>Build from source with PlatformIO or the Arduino IDE</span></a> <span class="where">PocketOBI / README.md</span></li>
+        </ul>
+        <p class="next">Next: <a href="#packscope">Read batteries on your PC</a></p>
+      </div>
+    </article>
+
+
+
+    <article class="guide" id="packscope">
+      <a class="video" href="https://youtu.be/8Qe2dTXrJ8g?t=193">
+        <span class="thumb"><img src="/assets/img/yt-8Qe2dTXrJ8g.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+        <span class="title">Your makita battery remembers everything you did to it!</span>
+        <span class="what">The desktop version, at 03:13.</span>
+      </a>
+      <div class="body">
+        <h2>Read batteries on your PC</h2>
+        <p>Put PocketOBI in PC bridge mode, plug it in by USB, and PackScope reads through it. Every reading is saved, per pack.</p>
+        <p class="need"><b>You need:</b> a PocketOBI and a Windows, macOS or Linux computer. To try PackScope first, its demo mode needs no hardware.</p>
+        <ul class="doc-links">
+          <li><a href="/packscope/"><span class="i i-right" aria-hidden="true"></span><span>Download PackScope</span></a></li>
+          <li><a href="https://github.com/TheRepairforge/PackScope#run-it"><span class="i i-out" aria-hidden="true"></span><span>Run it from source</span></a> <span class="where">PackScope / README.md</span></li>
+        </ul>
+        <p class="next">Next: <a href="#your-battery">Steps for your battery</a></p>
+      </div>
+    </article>
+
+    <article class="guide no-video" id="your-battery">
+      <div class="body">
+        <h2>Steps for your battery</h2>
+        <p>Reading, wiring and repairing depend on the battery platform. Each platform has its own page with these steps.</p>
+        <h3 style="margin-top:24px">Makita LXT 18&nbsp;V</h3>
+        <ul class="doc-links">
+          <li><a href="/makita-lxt/#read"><span class="i i-right" aria-hidden="true"></span><span>What it reads</span></a></li>
+          <li><a href="/makita-lxt/#wiring"><span class="i i-right" aria-hidden="true"></span><span>Wire the adapter</span></a></li>
+          <li><a href="/makita-lxt/#unlock"><span class="i i-right" aria-hidden="true"></span><span>Clear a false lockout</span></a></li>
+          <li><a href="/makita-lxt/#hardware"><span class="i i-right" aria-hidden="true"></span><span>When the verdict says hardware</span></a></li>
+        </ul>
+        <p class="next">Next: <a href="#troubleshooting">Something doesn't work</a></p>
+      </div>
+    </article>
+
+    <article class="guide no-video" id="troubleshooting">
+      <div class="body">
+        <h2>Something doesn't work</h2>
+        <p>"No battery found", a communication error, or PackScope can't see the device. The troubleshooting guide goes through it with a multimeter, one measurement at a time.</p>
+        <ul class="doc-links">
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/TROUBLESHOOTING.md"><span class="i i-out" aria-hidden="true"></span><span>Won't read a pack</span></a> <span class="where">PocketOBI / TROUBLESHOOTING.md</span></li>
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/TROUBLESHOOTING.md#bridge-mode-wont-connect-pc-app--packscope"><span class="i i-out" aria-hidden="true"></span><span>Bridge mode won't connect</span></a> <span class="where">PocketOBI / TROUBLESHOOTING.md</span></li>
+          <li><a href="https://github.com/TheRepairforge/PocketOBI/issues/new/choose"><span class="i i-out" aria-hidden="true"></span><span>Still stuck? Open an issue</span></a></li>
+        </ul>
+      </div>
+    </article>
+  </div>

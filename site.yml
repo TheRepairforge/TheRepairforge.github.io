@@ -1,0 +1,39 @@
+# Site-wide settings. Platform-specific content lives in platforms/<slug>.yml (D40).
+base_url: https://therepairforge.github.io
+name: The Repair Forge
+# true: a "draft" strip on every page. Set to false on the day the site goes public.
+draft: true
+og_image: /assets/img/og-default.jpg
+youtube: https://www.youtube.com/@TheRepairForge
+github_owner: TheRepairforge
+
+# Main navigation, in order. "batteries" is filled by the generator: with one platform it links
+# straight to that platform page, with two or more to /batteries/ (D40 point 7).
+nav:
+  - {key: diagnose, label: "Diagnose + Repair", href: /diagnose-repair/}
+  - {key: batteries, label: Batteries}
+  - {key: guides, label: Guides, href: /guides/}
+  - {key: pocketobi, label: PocketOBI, href: /pocketobi/}
+  - {key: packscope, label: PackScope, href: /packscope/}
+  - {key: about, label: About, href: /about/}
+
+footer:
+  generic: Brand names are used only to say which batteries these tools work with.
+  disclaimer: Not affiliated with or endorsed by any tool maker.
+  licences: "Firmware and PackScope: PolyForm Noncommercial 1.0.0. Hardware files and this site: CC BY-NC-SA 4.0."
+  links:
+    - {label: PocketOBI on GitHub, href: "https://github.com/TheRepairforge/PocketOBI"}
+    - {label: PackScope on GitHub, href: "https://github.com/TheRepairforge/PackScope"}
+    - {label: YouTube channel, href: "https://www.youtube.com/@TheRepairForge"}
+    - {label: Help translate, href: /translate/}
+    - {label: "About, credits, licences", href: /about/}
+
+# Translation review (PLAN 2.8). Only PUBLISHED languages: a new one joins with the release that
+# ships it. Strings are read from the public repos' default branch at build time.
+translate:
+  languages:
+    de: {name: German, native: Deutsch}
+    es: {name: Spanish, native: Español}
+  sources:
+    PocketOBI: {file: strings_i18n.h, kind: strtab}
+    PackScope: {dir: packscope/locales, kind: json}

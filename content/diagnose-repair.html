@@ -1,0 +1,177 @@
+---
+title: "Reset or unlock a Makita battery? Check it first"
+title_suffix: true
+description: "A Makita battery that won't charge is often locked, not dead. Before you reset or unlock it, find out which. Read what its management board remembers, decide if it can be saved, and clear a false lockout safely."
+path: "diagnose-repair/"
+nav: diagnose
+---
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Your Makita battery won't charge. That doesn't mean it's dead.</h1>
+        <p class="lead">Read what the battery's own management board remembers, decide whether it can be saved, and clear a false lockout when it is one.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#decide">How it decides <span class="i i-right" aria-hidden="true"></span></a>
+        </div>
+      </div>
+      <figure><img class="screen" src="/assets/img/screens/po-launcher.png" alt="PocketOBI home screen with the Battery tile showing UNLOCK, plus Repair, Tools and About" width="640" height="480" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="section" id="problem">
+    <div class="wrap split">
+      <div class="ph r43"><span><strong>Photo P1</strong>Opened LXT pack: the BMS board and the five cell groups. Top-down flat lay.</span></div>
+      <div>
+        <h2>Why good batteries end up in the bin</h2>
+        <p>Every Makita LXT pack has a small management board (the BMS) that watches its five cell groups. When something looks wrong, it stores a lock, and the charger refuses the pack from then on. On a Makita charger that is the red and green lights flashing in turn, and a battery that never charges.</p>
+        <p>Sometimes the lock is right: a cell group has failed, a sense wire has broken, a temperature sensor is dead. Sometimes it isn't. A pack left flat in a van over winter, or one that was briefly over-discharged, can stay locked long after its cells have recovered. The charger can't tell the difference, so it blinks, and the pack gets thrown away.</p>
+        <p><strong>The only way to know which case you have is to ask the BMS what it saw.</strong></p>
+        <p class="muted"><a href="https://youtu.be/57KsQQ7-Qd0?t=44">Why Makita locks a good battery</a>, on video.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="diagnose">
+    <div class="wrap">
+      <div class="split wide-text">
+        <div>
+          <h2>Diagnose: what it actually reads</h2>
+          <p>Clip the battery in and PocketOBI reads it in a few seconds, with no PC and no charger. It reads what the management board knows: every cell group and the spread between them, the temperature sensors, the charge count and the wear counters, the date and the lock state.</p>
+          <p><a href="/makita-lxt/#read">Everything it reads on a Makita LXT battery</a></p>
+        </div>
+        <figure><img class="screen" src="/assets/img/screens/po-battery-health.png" alt="PocketOBI health page: condition estimate, over-discharge and over-load counters, cell range, temperatures" width="640" height="480" loading="lazy"><figcaption>Sample battery, real firmware screen.</figcaption></figure>
+      </div>
+
+      <h3 style="margin-top:48px" id="verdict">One verdict, in plain words</h3>
+      <p>All of that ends in one verdict, worded exactly as the device and PackScope show it.</p>
+      <div class="verdicts" role="list">
+        <div class="verdict" role="listitem">
+          <span class="label v-green"><span class="i i-check" aria-hidden="true"></span>HEALTHY</span>
+          <p>Cells balanced, sensors agree, no lock. Nothing to fix.</p>
+        </div>
+        <div class="verdict" role="listitem">
+          <span class="label v-amber"><span class="i i-wrench" aria-hidden="true"></span>UNLOCK</span>
+          <p>The pack is locked but nothing on it looks broken. This is the false lockout the tool is built for: it can be unlocked.</p>
+        </div>
+        <div class="verdict" role="listitem">
+          <span class="label v-orange"><span class="i i-warn" aria-hidden="true"></span>POSSIBLE HW FIX</span>
+          <p>Something is off but not conclusive, for example a pack run uniformly flat. Charge it carefully and read it again.</p>
+        </div>
+        <div class="verdict" role="listitem">
+          <span class="label v-red"><span class="i i-x" aria-hidden="true"></span>HARDWARE FIX</span>
+          <p>A dead or failing cell group, an imbalance, a broken sense wire, a failed sensor. Unlocking won't help: the part needs fixing, or the battery recycling.</p>
+        </div>
+      </div>
+      <p>A pack that was simply run flat is not condemned for it. A cell group that is genuinely dead is.</p>
+    </div>
+  </section>
+
+  <section class="section" id="decide">
+    <div class="wrap split wide-text">
+      <div>
+        <h2>Decide: is this battery worth unlocking?</h2>
+        <p>Before anything is written to the pack, the repair wizard runs the checks in order and stops at the first one that fails.</p>
+        <div class="checks">
+          <div>
+            <h3>Can it talk?</h3>
+            <p>If the BMS doesn't answer, nothing else matters. The wizard says so and points you to the wiring checklist.</p>
+          </div>
+          <div>
+            <h3>Is anything broken?</h3>
+            <p>It looks for the faults an unlock can't cure: a broken sense wire, a weak cell group, an imbalance between groups, a failed temperature sensor. It names the group or the sensor. <strong>Any hardware fault blocks the unlock.</strong> You fix the pack first, or you recycle it.</p>
+          </div>
+          <div>
+            <h3>Is it locked, and why?</h3>
+            <p>If the pack is locked and nothing above failed, the wizard calls it a false lockout and offers the unlock.</p>
+          </div>
+        </div>
+        <p>What no tool can tell you at rest: whether a pack that reads clean today will lock itself again under charge. A pack with a real internal fault does exactly that, about ten seconds into charging. So the charger stays the final test, and we say so on the screen and here. <a href="https://youtu.be/57KsQQ7-Qd0?t=1062">See it happen on a real pack</a>.</p>
+      </div>
+      <figure><img class="screen" src="/assets/img/screens/po-repair-lock.png" alt="Repair wizard on a false lockout: charger lock N34 found, no latched fault, thermistor and cells OK" width="640" height="480" loading="lazy"><figcaption>A false lockout: the lock is set, nothing is broken.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section" id="repair">
+    <div class="wrap">
+      <h2>Repair: what the unlock does, and what it never does</h2>
+      <p>When the wizard reaches the end, it shows a confirmation screen. Nothing is written before you confirm.</p>
+      <div class="do-dont">
+        <div>
+          <h3>What it does</h3>
+          <p>It clears the false lock the board stored and makes its record consistent again, writes it back, then reads the battery again and shows you the result.</p>
+          <p><a href="/makita-lxt/#unlock">What it does on a Makita LXT battery</a></p>
+          <figure style="margin-top:20px"><img class="screen" src="/assets/img/screens/po-confirm-unlock.png" alt="Confirmation screen before the write: warning, what will be written, click to write or turn to cancel" width="640" height="480" loading="lazy"><figcaption>Nothing is written before you confirm.</figcaption></figure>
+        </div>
+        <div>
+          <h3>What it never does</h3>
+          <ul class="reads">
+            <li>It never erases the failure code. If the BMS recorded a pack as dead, it stays recorded as dead.</li>
+            <li>It never touches the manufacturing or status data.</li>
+            <li>It never forces anything. If the record is already valid, nothing is written.</li>
+            <li>It can't overrule the BMS. A pack with a real fault locks itself again, and that is the correct outcome.</li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="watch">
+    <div class="wrap">
+      <h2>Watch it work</h2>
+      <div class="videos">
+        <a class="video" href="https://youtu.be/8Qe2dTXrJ8g">
+          <span class="thumb"><img src="/assets/img/yt-8Qe2dTXrJ8g.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+          <span class="title">Your makita battery remembers everything you did to it!</span>
+          <span class="what">The tool screen by screen, then the whole build: parts, PCB, assembly, firmware.</span>
+        </a>
+        <div class="side">
+          <a class="video" href="https://youtu.be/57KsQQ7-Qd0">
+            <span class="thumb"><img src="/assets/img/yt-57KsQQ7-Qd0.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+            <span class="title">Your makita battery is locked, not dead. So I built this!</span>
+            <span class="what">Why Makita locks good batteries, the prototype, and three locked packs put to the test.</span>
+          </a>
+          <a class="video" href="https://youtu.be/Fxc9aUqT9bo">
+            <span class="thumb"><img src="/assets/img/yt-Fxc9aUqT9bo.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+            <span class="title">This makita battery isn't dead. A 20 cent part killed it!</span>
+            <span class="what">When the verdict says hardware: a real fix on a real pack.</span>
+          </a>
+        </div>
+      </div>
+      <p style="margin-top:28px">Found a pack it reads wrong? <a href="https://github.com/TheRepairforge/PocketOBI/issues/new/choose">Open an issue on GitHub</a>.</p>
+    </div>
+  </section>
+
+  <section class="section safety" id="safety">
+    <div class="wrap">
+      <h2>Read this before you clip anything in</h2>
+      <p>These are lithium-ion packs. Treat them that way.</p>
+      <ul>
+        <li><strong>There is up to about 21&nbsp;V on B+.</strong> It must never reach the ESP32. PocketOBI is powered from USB, never from the pack.</li>
+        <li><strong>An unlock only helps a pack whose cells are healthy.</strong> Don't use it to put a pack with a bad or low cell back into service. That is how packs catch fire.</li>
+        <li><strong>Charge an unlocked pack where you can watch it</strong>, on a non-flammable surface, the first time.</li>
+        <li><strong>No warranty.</strong> This is a hobby project, used at your own risk. If you're not comfortable around lithium cells, this isn't the project to start with.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="two-ways">
+    <div class="wrap">
+      <h2>Two ways to do it</h2>
+      <div class="duo">
+        <div>
+          <div class="ph" style="margin-bottom:24px"><span><strong>Photo H1</strong>PocketOBI alone at the bench.</span></div>
+          <h3>At the bench: PocketOBI on its own</h3>
+          <p>A small box with a screen and a knob. It reads the pack, gives the verdict and runs the repair wizard. Nothing else needed.</p>
+          <a class="btn btn-primary" href="/guides/#build">Build a PocketOBI <span class="i i-right" aria-hidden="true"></span></a>
+        </div>
+        <div>
+          <div class="ph" style="margin-bottom:24px"><span><strong>Photo K1</strong>Laptop running PackScope, PocketOBI on a pack plugged in by USB.</span></div>
+          <h3>At the desk: PocketOBI and PackScope</h3>
+          <p>Plug the same PocketOBI into a computer and PackScope reads through it: every reading saved, history per pack, CSV export, and the same verdict and wizard on a bigger screen.</p>
+          <a class="btn btn-plain" href="/packscope/">Add PackScope <span class="i i-right" aria-hidden="true"></span></a>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:56px">PocketOBI speaks the Makita protocol documented by <a href="https://github.com/mnh-jansson/open-battery-information">Open Battery Information</a> (Martin Jansson, MIT).</p>
+    </div>
+  </section>

@@ -1,0 +1,141 @@
+# Platform entry (D40): presentation only. No thresholds, no restated wiring: link the README.
+# release = the EXACT tag that ships this platform (never "latest"); check_site.py verifies it is public.
+slug: makita-lxt
+maker: Makita
+platform: LXT 18 V
+nav_label: Makita LXT
+line:
+  repo: PocketOBI
+  release: v2.2.0
+boards:
+- esp32-c3
+- cyd
+title: Unlock or reset a Makita LXT battery safely
+description: Makita LXT battery flashing red and green on the charger? See what PocketOBI reads on an LXT 18 V battery, whether it can be saved, and what the unlock fixes.
+hero:
+  h1: 'Makita LXT battery tester: read it, check it, unlock it.'
+  lead: Charger flashing red and green? See what the battery remembers, whether it can be saved, and what the unlock fixes.
+  cta:
+    label: Build a PocketOBI
+    href: /guides/#build
+  media: |-
+    <figure><img class="screen" src="/assets/img/screens/po-repair-lock.png" alt="PocketOBI repair wizard on an LXT battery with a false lockout" width="640" height="480" loading="lazy"></figure>
+sections:
+  read: |-
+    <div class="wrap split wide-text">
+          <div>
+            <h2>What it reads on an LXT battery</h2>
+            <p>Clip the battery in and PocketOBI reads it in a few seconds. No PC, no charger.</p>
+            <ul class="reads">
+              <li><strong>Every cell group</strong>, individually, and the spread between the highest and the lowest.</li>
+              <li><strong>Both temperature sensors</strong>, side by side. One that disagrees strongly with the other usually means a failed sensor, not a hot battery.</li>
+              <li><strong>Charge count</strong> and the <strong>wear counters</strong> the BMS keeps for over-discharge and overload events.</li>
+              <li><strong>Manufacturing date</strong>, model, capacity and serial number.</li>
+              <li><strong>Lock state</strong>: whether the charger lock is set.</li>
+              <li><strong>BMS generation</strong>: older F0513-based batteries are detected and read with their own command set.</li>
+            </ul>
+            <p class="muted">It also shows a Condition figure: our own estimate from the charge count, labelled as such. It is not Makita's internal state-of-health number, and it doesn't pretend to be.</p>
+            <p>All of it ends in <a href="/diagnose-repair/#verdict">one verdict</a>, the same on the device, in the repair wizard and in PackScope.</p>
+            <p><a href="https://youtu.be/8Qe2dTXrJ8g?t=91">The numbers nobody shows you</a> and <a href="https://youtu.be/8Qe2dTXrJ8g?t=128">the tool, screen by screen</a>, on video.</p>
+          </div>
+          <div class="screen-set"><figure><img class="screen" src="/assets/img/screens/po-battery-overview.png" alt="Overview page: pack voltage and the five cell voltages" width="640" height="480" loading="lazy"></figure><figure><img class="screen" src="/assets/img/screens/po-battery-health.png" alt="Health page: condition estimate, wear counters, temperatures" width="640" height="480" loading="lazy"></figure><figure><img class="screen" src="/assets/img/screens/po-battery-identity.png" alt="Identity page: model, serial number, capacity, dates, charge count" width="640" height="480" loading="lazy"></figure></div><p class="note" style="margin-top:10px">Overview, Health and Identity pages. Sample battery, real firmware screens.</p>
+        </div>
+  wiring: |-
+    <div class="wrap split">
+          <div class="ph r43"><span><strong>Photo B4</strong>LXT adapter wiring: DATA and ENABLE visible, B+ terminal unused. Macro.</span></div>
+          <div>
+            <h2>The adapter</h2>
+            <p>PocketOBI talks to the battery through a Makita LXT adapter that clips onto it. Three wires: data, enable and ground. Power comes from USB, never from the battery.</p>
+            <p><strong>The one trap:</strong> identify DATA and ENABLE by the ESP32 silkscreen, not by the adapter's connector numbering. Some adapters number their connector from the other end. And B+ is never connected.</p>
+            <ul class="doc-links">
+              <li><a href="https://github.com/TheRepairforge/PocketOBI#wiring"><span class="i i-out" aria-hidden="true"></span><span>Wiring, in the README</span></a> <span class="where">PocketOBI / README.md</span></li>
+              <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/CYD_GUIDE.md"><span class="i i-out" aria-hidden="true"></span><span>Wiring on a CYD</span></a> <span class="where">PocketOBI / docs / CYD_GUIDE.md</span></li>
+            </ul>
+          </div>
+        </div>
+  unlock: |-
+    <div class="wrap">
+          <h2>Unlock or reset an LXT battery, only when it is safe</h2>
+          <p>When the verdict is UNLOCK, the repair wizard checks the battery, shows a confirmation screen, and only then writes. Nothing is written before you confirm.</p>
+          <div class="do-dont">
+            <div>
+              <h3>What it does</h3>
+              <p>Clears the charger-lock flag in the BMS memory, recalculates the checksums the charger and the BMS verify, writes the record back, and clears the internal error register. Then it reads the battery again and shows you the result.</p>
+              <div class="screen-pair" style="margin-top:20px"><figure><img class="screen" src="/assets/img/screens/po-confirm-unlock.png" alt="Confirmation screen before the write" width="640" height="480" loading="lazy"></figure><figure><img class="screen" src="/assets/img/screens/po-unlock-result.png" alt="Result screen: before N34, after none, unlocked" width="640" height="480" loading="lazy"></figure></div><p class="note" style="margin-top:10px">Confirm, then the result read back from the battery.</p>
+            </div>
+            <div>
+              <h3>What it never does</h3>
+              <ul class="reads">
+                <li>It never erases the failure code. If the BMS recorded the battery as dead, it stays recorded as dead.</li>
+                <li>It never touches the manufacturing or status data.</li>
+                <li>It never forces anything. If the record is already valid, nothing is written.</li>
+                <li>It can't overrule the BMS. A battery with a real fault locks itself again, and that is the correct outcome.</li>
+              </ul>
+              <ul class="doc-links">
+                <li><a href="https://github.com/TheRepairforge/PocketOBI#unlock--repair"><span class="i i-out" aria-hidden="true"></span><span>What it writes, byte by byte</span></a> <span class="where">PocketOBI / README.md</span></li>
+              </ul>
+            </div>
+          </div>
+          <h3 style="margin-top:48px">Three locked packs, three outcomes</h3>
+          <p>The unlock is not magic, and the video shows it. One pack charges again. One reads clean but the charger still refuses it: a temperature sensor gives the real fault away, and that pack is <a href="#hardware">repaired further down</a>. One unlocks, then locks itself again under charge.</p>
+          <div class="split" style="margin-top:20px">
+            <a class="video" href="https://youtu.be/57KsQQ7-Qd0?t=722">
+              <span class="thumb"><img src="/assets/img/yt-57KsQQ7-Qd0.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+              <span class="title">Your makita battery is locked, not dead. So I built this!</span>
+            </a>
+            <ol class="chapters">
+              <li><a href="https://youtu.be/57KsQQ7-Qd0?t=44"><span class="ts">00:44</span>Why Makita locks a good battery</a></li>
+              <li><a href="https://youtu.be/57KsQQ7-Qd0?t=773"><span class="ts">12:53</span>Pack 1: locked, then charging again</a></li>
+              <li><a href="https://youtu.be/57KsQQ7-Qd0?t=925"><span class="ts">15:25</span>Pack 2: the temperature clue</a></li>
+              <li><a href="https://youtu.be/57KsQQ7-Qd0?t=1062"><span class="ts">17:42</span>Pack 3: unlocked, then locked again</a></li>
+              <li><a href="https://youtu.be/57KsQQ7-Qd0?t=1200"><span class="ts">20:00</span>Why these tools are not magic</a></li>
+            </ol>
+          </div>
+          <p style="margin-top:28px">Before you try it: <a href="/diagnose-repair/#safety">read the safety notes</a>.</p>
+        </div>
+  hardware: |-
+    <div class="wrap split">
+          <div>
+            <a class="video" href="https://youtu.be/Fxc9aUqT9bo">
+              <span class="thumb"><img src="/assets/img/yt-Fxc9aUqT9bo.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+              <span class="title">This makita battery isn't dead. A 20 cent part killed it!</span>
+            </a>
+            <ol class="chapters">
+              <li><a href="https://youtu.be/Fxc9aUqT9bo?t=28"><span class="ts">00:28</span>The charger blinks and never charges</a></li>
+              <li><a href="https://youtu.be/Fxc9aUqT9bo?t=77"><span class="ts">01:17</span>What the tool sees</a></li>
+              <li><a href="https://youtu.be/Fxc9aUqT9bo?t=310"><span class="ts">05:10</span>Measuring the thermistor</a></li>
+              <li><a href="https://youtu.be/Fxc9aUqT9bo?t=516"><span class="ts">08:36</span>It charges, then it stops</a></li>
+              <li><a href="https://youtu.be/Fxc9aUqT9bo?t=557"><span class="ts">09:17</span>The hidden rule</a></li>
+              <li><a href="https://youtu.be/Fxc9aUqT9bo?t=924"><span class="ts">15:24</span>What it costs to fix</a></li>
+            </ol>
+          </div>
+          <div>
+            <h2>When the verdict says hardware</h2>
+            <p>An unlock can't fix a broken part. Sometimes the part is cheap and the fix is a soldering job. This video is one of those: it is pack 2 from the three locked packs above, the one that read clean and still would not charge, opened and repaired.</p>
+            <p>In the video, a 10&nbsp;k&Omega; resistor stands in for the thermistor only to prove it is the culprit. That is a diagnostic step, not a repair: the fix is a new thermistor.</p>
+            <p class="note">The short version: <a href="https://youtu.be/vOC67Znyn_M">Makita battery not charging? It's this 20 cent part</a></p>
+          </div>
+        </div>
+  videos: |-
+    <div class="wrap">
+          <h2>LXT on the channel</h2>
+          <div class="videos">
+            <a class="video" href="https://youtu.be/8Qe2dTXrJ8g">
+              <span class="thumb"><img src="/assets/img/yt-8Qe2dTXrJ8g.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+              <span class="title">Your makita battery remembers everything you did to it!</span>
+              <span class="what">The tool screen by screen, then the whole build: parts, PCB, assembly, firmware.</span>
+            </a>
+            <div class="side">
+              <a class="video" href="https://youtu.be/57KsQQ7-Qd0">
+                <span class="thumb"><img src="/assets/img/yt-57KsQQ7-Qd0.jpg" alt="" width="960" height="540" loading="lazy"><span class="play"><span class="i i-play" aria-hidden="true"></span></span></span>
+                <span class="title">Your makita battery is locked, not dead. So I built this!</span>
+                <span class="what">Why Makita locks good batteries, the prototype, and three locked packs put to the test.</span>
+              </a>
+            </div>
+          </div>
+        </div>
+credits:
+- |-
+  PocketOBI speaks the Makita protocol documented by <a href="https://github.com/mnh-jansson/open-battery-information">Open Battery Information</a> (Martin Jansson, MIT), with the rosvall LXT protocol documentation and the obi-esp32 port by appositeit as references.
+trademark_short: Makita and LXT are trademarks of Makita Corporation.
+trademark: Makita and LXT are trademarks of Makita Corporation, named only to say which batteries this works with. Not affiliated with or endorsed by Makita.

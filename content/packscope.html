@@ -1,0 +1,60 @@
+---
+title: "PackScope: Makita battery software for your PC"
+title_suffix: true
+description: "PackScope reads Makita LXT batteries through a PocketOBI, keeps a history of every battery, exports CSV and gives the same verdict. Free for personal use."
+path: "packscope/"
+nav: packscope
+jsonld: "{\"@context\": \"https://schema.org\", \"@type\": \"SoftwareApplication\", \"name\": \"PackScope\", \"applicationCategory\": \"UtilitiesApplication\", \"operatingSystem\": \"Windows, macOS, Linux\", \"url\": \"https://therepairforge.github.io/packscope/\", \"downloadUrl\": \"https://github.com/TheRepairforge/PackScope/releases/latest\", \"license\": \"https://polyformproject.org/licenses/noncommercial/1.0.0/\", \"offers\": {\"@type\": \"Offer\", \"price\": \"0\", \"priceCurrency\": \"EUR\"}, \"author\": {\"@type\": \"Organization\", \"name\": \"The Repair Forge\", \"url\": \"https://therepairforge.github.io/\"}}"
+---
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <img class="logo-dark" src="/assets/img/packscope-dark.png" alt="PackScope" width="900" height="158" style="height:44px;width:auto;margin-bottom:28px">
+        <img class="logo-light" src="/assets/img/packscope-light.png" alt="PackScope" width="900" height="158" style="height:44px;width:auto;margin-bottom:28px">
+        <h1>Read Makita batteries on your computer, through your PocketOBI.</h1>
+        <p class="lead">Every reading saved, a history per pack, and the same verdict and repair wizard on a bigger screen.</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="#download">Download <span class="i i-down" aria-hidden="true"></span></a>
+        </div>
+      </div>
+      <figure><img class="screen soft" src="/assets/img/screens/ps-live.png" alt="PackScope live read: a healthy BL1860B with pack voltage, health estimate, cycles, temperatures and five cell bars" width="1320" height="792" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split wide-text">
+      <div>
+        <h2>What it adds to the device</h2>
+        <ul class="reads">
+          <li><strong>A history per pack.</strong> Every reading goes into a local file on your computer. Nothing leaves your machine.</li>
+          <li><strong>CSV export</strong> and a JSON report you share only if you choose to.</li>
+          <li><strong>The same verdict and repair wizard</strong>, ported from the firmware so the two always agree.</li>
+          <li><strong>A demo mode</strong> with sample packs, to try it before you own a PocketOBI.</li>
+        </ul>
+        <p>It connects to PocketOBI in PC bridge mode over USB. If it can't see the device, the <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/TROUBLESHOOTING.md#bridge-mode-wont-connect-pc-app--packscope">bridge troubleshooting steps</a> cover it.</p>
+      </div>
+      <figure><img class="screen soft" src="/assets/img/screens/ps-repair-check.png" alt="PackScope repair wizard, step Classify: charger lock N34, no latched fault, thermistor and cells OK, false lockout" width="1320" height="792" loading="lazy"><figcaption>The repair wizard on a demo battery: a false lockout, nothing broken.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="section" id="download">
+    <div class="wrap">
+      <h2>Download</h2>
+      <div class="downloads">
+        <div class="dl">
+          <a class="btn btn-primary" href="https://github.com/TheRepairforge/PackScope/releases/latest/download/PackScope-windows.zip"><span class="i i-down" aria-hidden="true"></span> Windows</a>
+          <p class="note" style="margin:0">Unsigned build. If SmartScreen stops it, choose More info, then Run anyway.</p>
+        </div>
+        <div class="dl">
+          <a class="btn btn-plain" href="https://github.com/TheRepairforge/PackScope/releases/latest/download/PackScope-macos.tar.gz"><span class="i i-down" aria-hidden="true"></span> macOS</a>
+          <p class="note" style="margin:0">Unsigned build. The first time, right-click the app and choose Open.</p>
+        </div>
+        <div class="dl">
+          <a class="btn btn-plain" href="https://github.com/TheRepairforge/PackScope/releases/latest/download/PackScope-linux.tar.gz"><span class="i i-down" aria-hidden="true"></span> Linux</a>
+          <p class="note" style="margin:0">Extract, then <span class="mono">chmod +x</span> the binary.</p>
+        </div>
+      </div>
+      <p class="muted">All versions and release notes: <a href="https://github.com/TheRepairforge/PackScope/releases">PackScope releases</a>. To run it from source, see the <a href="https://github.com/TheRepairforge/PackScope#run-it">README</a>.</p>
+      <p class="note">PolyForm Noncommercial 1.0.0: free for personal use, repair and education. Commercial use needs a separate licence; ask through <a href="https://github.com/TheRepairforge/PackScope/issues">GitHub issues</a>.</p>
+    </div>
+  </section>

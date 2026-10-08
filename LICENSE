@@ -1,0 +1,25 @@
+The Repair Forge website: text and images
+Copyright (c) 2026 The Repair Forge
+
+This work is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0).
+
+You are free to:
+  - Share  — copy and redistribute the material in any medium or format
+  - Adapt  — remix, transform, and build upon the material
+
+Under the following terms:
+  - Attribution   — give appropriate credit and indicate if changes were made.
+  - NonCommercial — you may not use the material for commercial purposes.
+  - ShareAlike    — if you remix or build upon the material, you must distribute
+                    your contributions under the same license.
+
+Human-readable summary: https://creativecommons.org/licenses/by-nc-sa/4.0/
+Full legal code:        https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
+
+This license covers the text and images of this website, and the code that builds it
+(build.py, templates/, tools/). It does not cover:
+  - the fonts in assets/fonts/ (SIL Open Font License, see the OFL-*.txt files there);
+  - the icons in assets/icons/ (Phosphor, MIT, see LICENSE-phosphor.txt there);
+  - the tools presented here, which are licensed in their own repositories.
+Product and brand names belong to their owners and are used only to state compatibility.

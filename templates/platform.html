@@ -1,0 +1,29 @@
+{#- One battery platform (D40). No platform name in this file: everything comes from
+    platforms/<slug>.yml. The section ids are the frozen anchors (D40 point 7). -#}
+{% extends "base.html" %}
+{% block main %}
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>{{ p.hero.h1 }}</h1>
+        <p class="lead">{{ p.hero.lead }}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="{{ p.hero.cta.href }}">{{ p.hero.cta.label }} <span class="i i-right" aria-hidden="true"></span></a>
+        </div>
+      </div>
+      {{ p.hero.media }}
+    </div>
+  </section>
+{% for sid in ['read', 'wiring', 'unlock', 'hardware', 'videos'] %}{% if p.sections[sid] %}
+  <section class="section" id="{{ sid }}">
+    {{ p.sections[sid] }}
+  </section>
+{% endif %}{% endfor %}
+  <section class="section tight">
+    <div class="wrap">
+      <h2 style="font-size:1.3rem">Credits for this platform</h2>
+{% for c in p.credits %}      <p class="muted">{{ c }}</p>
+{% endfor %}      <p class="muted">{{ p.trademark }}</p>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,48 @@
+name: Build, check, deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # run it after a tool release, to pick up its firmware
+  schedule:
+    - cron: "17 4 * * *"    # daily safety net: dead video, renamed README heading, new release
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python build.py
+      - run: python tools/check_site.py --online
+      # While the repository is private the site is built and checked, never published.
+      - name: Firmware for the web flasher
+        if: ${{ !github.event.repository.private }}
+        run: python tools/fetch_firmware.py
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ !github.event.repository.private }}
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
