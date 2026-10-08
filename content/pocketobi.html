@@ -73,6 +73,9 @@ nav: pocketobi
       <h3 style="margin-top:44px">If it doesn't go as planned</h3>
       <ul class="reads">
         <li><strong>Board not detected.</strong> On the ESP32-C3, hold BOOT while plugging it in. On Windows the CYD may need the CH340 USB driver.</li>
+        <li><strong>Mirrored image on the CYD</strong> (text reads right to left, the title bar looks olive green). Some CYDs have an ILI9341 screen: install
+          <esp-web-install-button manifest="/firmware/PocketOBI/cyd-ili9341/manifest.json"><button slot="activate" class="link-btn">the ILI9341 build</button><span slot="unsupported">the <code>cyd-ili9341</code> file from the release</span><span slot="not-allowed">the <code>cyd-ili9341</code> file from the release</span></esp-web-install-button>
+          instead, then run Settings &gt; Calibrate touch once. Details in the <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/CYD_GUIDE.md">CYD guide</a>.</li>
         <li><strong>Erase device</strong> wipes the saved language and the touch calibration. Leave it unticked for an update.</li>
         <li><strong>Which version is on it?</strong> The About screen shows it.</li>
       </ul>
