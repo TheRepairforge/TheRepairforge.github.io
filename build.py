@@ -130,7 +130,7 @@ def main():
 
     for p in platforms:
         emit('platform.html', {'title': p['title'], 'title_suffix': True, 'description': p['description'],
-                               'path': p['slug'] + '/', 'nav': 'batteries'}, p=p)
+                               'path': p['slug'] + '/', 'nav': 'batteries', 'og_image': p.get('og_image')}, p=p)
     if len(platforms) > 1:
         emit('batteries.html', {'title': 'Batteries', 'title_suffix': True, 'path': 'batteries/', 'nav': 'batteries',
                                 'description': 'Pick the platform of your battery: what is read, what can be repaired.'})

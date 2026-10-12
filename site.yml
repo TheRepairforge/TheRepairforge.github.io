@@ -4,6 +4,8 @@ name: The Repair Forge
 # true: a "draft" strip on every page. Set to false on the day the site goes public.
 draft: true
 og_image: /assets/img/og-default.jpg
+# Google Search Console, "HTML tag" method: the content= value only. Empty = no tag.
+google_site_verification: ""
 youtube: https://www.youtube.com/@TheRepairForge
 github_owner: TheRepairforge
 
