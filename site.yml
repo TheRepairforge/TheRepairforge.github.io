@@ -2,7 +2,7 @@
 base_url: https://therepairforge.github.io
 name: The Repair Forge
 # true: a "draft" strip on every page. Set to false on the day the site goes public.
-draft: true
+draft: false
 og_image: /assets/img/og-default.jpg
 # Google Search Console, "HTML tag" method: the content= value only. Empty = no tag.
 google_site_verification: "cc3548J30_mC8v2e1vCQTBbOQnJ44qR9p2cZE6huR_w"
