@@ -189,7 +189,7 @@ img.screen.soft { image-rendering: auto; }
 .screen-set > figure:first-child { grid-column: 1 / -1; }
 .screen-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 10px; }
-.photo { border-radius: var(--radius); }
+.photo { border-radius: var(--radius); max-width: 100%; height: auto; }
 
 /* verdict panel: the one place elevation means something (mimics the device panel) */
 .verdicts { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); margin: 28px 0 20px; max-width: 760px; }

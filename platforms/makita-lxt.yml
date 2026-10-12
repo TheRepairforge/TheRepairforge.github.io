@@ -41,8 +41,7 @@ sections:
           <div class="screen-set"><figure><img class="screen" src="/assets/img/screens/po-battery-overview.png" alt="Overview page: pack voltage and the five cell voltages" width="640" height="480" loading="lazy"></figure><figure><img class="screen" src="/assets/img/screens/po-battery-health.png" alt="Health page: condition estimate, wear counters, temperatures" width="640" height="480" loading="lazy"></figure><figure><img class="screen" src="/assets/img/screens/po-battery-identity.png" alt="Identity page: model, serial number, capacity, dates, charge count" width="640" height="480" loading="lazy"></figure></div><p class="note" style="margin-top:10px">Overview, Health and Identity pages. Sample battery, real firmware screens.</p>
         </div>
   wiring: |-
-    <div class="wrap split">
-          <div class="ph r43"><span><strong>Photo B4</strong>LXT adapter wiring: DATA and ENABLE visible, B+ terminal unused. Macro.</span></div>
+    <div class="wrap split wide-text">
           <div>
             <h2>The adapter</h2>
             <p>PocketOBI talks to the battery through a Makita LXT adapter that clips onto it. Three wires: data, enable and ground. Power comes from USB, never from the battery.</p>
