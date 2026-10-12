@@ -11,7 +11,7 @@ per platforms/<slug>.yml through templates/platform.html, the /batteries/ index 
 two platforms, and the /translate/ pages built from the PUBLISHED string tables of the tool repos.
 Nothing in this file or in templates/ names a platform: platform content is data (D40).
 """
-import argparse, csv, io, json, os, re, shutil, sys, urllib.parse, urllib.request
+import argparse, csv, io, json, os, re, shutil, struct, sys, urllib.parse, urllib.request
 import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from markupsafe import Markup
@@ -57,6 +57,15 @@ def strtab(src):
     if len(rows) != n:
         sys.exit(f'firmware string table: parsed {len(rows)} of {n} rows, the table changed shape')
     return [dict(zip(('key', 'EN', 'FR', 'DE', 'ES'), r)) for r in rows]
+
+
+def strtab_ja(src, en):
+    """strings_ja.h: one literal per StrId, enum order; returns {key: text} ('' = not translated)."""
+    rows = re.findall(r'/\*(S_\w+)\*/\s*(?:"((?:[^"\\]|\\.)*)"|nullptr)\s*,', src)
+    n = len(re.findall(r'/\*S_\w+\*/', src))
+    if len(rows) != n or [k for k, _ in rows] != [r['key'] for r in en]:
+        sys.exit('strings_ja.h: rows do not match the main string table, the file changed shape')
+    return dict(rows)
 
 
 def issue_url(site, repo, lang_name, code, key, en, cur):
@@ -142,24 +151,33 @@ def main():
     ps_en = json.loads(fetch(site, 'PackScope', f'{ps_dir}/en.json', args.offline))
     langs = []
     for code, meta in tr['languages'].items():
-        fw = [{'key': r['key'], 'en': r['EN'], 'cur': r[code.upper()],
-               'longest': max(len(r[c]) for c in ('EN', 'FR', 'DE', 'ES')),
-               'issue': issue_url(site, 'PocketOBI', meta['name'], code, r['key'], r['EN'], r[code.upper()])} for r in fw_raw]
-        ps_tr = json.loads(fetch(site, 'PackScope', f'{ps_dir}/{code}.json', args.offline))
-        ps = [{'key': k, 'en': v, 'cur': ps_tr.get(k, ''),
-               'issue': issue_url(site, 'PackScope', meta['name'], code, k, v, ps_tr.get(k, ''))} for k, v in ps_en.items()]
-        write_csv(os.path.join(out, 'translate', 'files', f'pocketobi-{code}.csv'), fw, code, True)
-        write_csv(os.path.join(out, 'translate', 'files', f'packscope-{code}.csv'), ps, code, False)
-        l = {'code': code, 'name': meta['name'], 'native': meta['native'], 'n_fw': len(fw), 'n_ps': len(ps)}
+        cjk = 'firmware' in meta   # a separate table, drawn with the CJK font: no ASCII rule, no width column
+        cur = strtab_ja(fetch(site, 'PocketOBI', meta['firmware'], args.offline), fw_raw) if cjk else {r['key']: r[code.upper()] for r in fw_raw}
+        fw = [{'key': r['key'], 'en': r['EN'], 'cur': cur[r['key']],
+               'longest': '' if cjk else max(len(r[c]) for c in ('EN', 'FR', 'DE', 'ES')),
+               'issue': issue_url(site, 'PocketOBI', meta['name'], code, r['key'], r['EN'], cur[r['key']])} for r in fw_raw]
+        write_csv(os.path.join(out, 'translate', 'files', f'pocketobi-{code}.csv'), fw, code, not cjk)
+        ps = []
+        if meta.get('packscope', True):
+            ps_tr = json.loads(fetch(site, 'PackScope', f'{ps_dir}/{code}.json', args.offline))
+            ps = [{'key': k, 'en': v, 'cur': ps_tr.get(k, ''),
+                   'issue': issue_url(site, 'PackScope', meta['name'], code, k, v, ps_tr.get(k, ''))} for k, v in ps_en.items()]
+            write_csv(os.path.join(out, 'translate', 'files', f'packscope-{code}.csv'), ps, code, False)
+        with open(os.path.join(HERE, 'assets', 'img', 'translate', f'po-{code}-sheet.png'), 'rb') as f:
+            sheet = struct.unpack('>II', f.read(24)[16:24])   # PNG IHDR: width, height
+        l = {'code': code, 'name': meta['name'], 'native': meta['native'], 'n_fw': len(fw), 'n_ps': len(ps),
+             'cjk': cjk, 'sheet_w': sheet[0], 'sheet_h': sheet[1]}
         langs.append(l)
-        emit('translate_lang.html', {'title': f'Review the {meta["name"]} translation of PocketOBI and PackScope', 'title_suffix': True,
-                                     'description': f'Native {meta["name"]} speakers: check the PocketOBI and PackScope strings and suggest fixes on GitHub.',
-                                     'path': f'translate/{code}/'}, l=l, fw=fw, ps=ps)
+        tools = 'PocketOBI and PackScope' if ps else 'PocketOBI'
+        emit('translate_lang.html', {'title': f'Review the {meta["name"]} translation of {tools}', 'title_suffix': True,
+                                     'description': f'Native {meta["name"]} speakers: check the {tools} strings and suggest fixes on GitHub.',
+                                     'path': f'translate/{code}/', 'nav': 'translate'}, l=l, fw=fw, ps=ps)
     names = [l['name'] for l in langs]
+    join = lambda w, last: names[0] if len(names) == 1 else ', '.join(names[:-1]) + f' {last} ' + names[-1]
     emit('translate_hub.html', {'title': 'Help translate PocketOBI and PackScope', 'title_suffix': True,
-                                'description': f'Native {" and ".join(names)} speakers: review the PocketOBI and PackScope translations and suggest fixes on GitHub.',
-                                'path': 'translate/'}, langs=langs,
-         lang_names=' or '.join(names), lang_names_and=' and '.join(names))
+                                'description': f'Native {join(names, "and")} speakers: review the PocketOBI and PackScope translations and suggest fixes on GitHub.',
+                                'path': 'translate/', 'nav': 'translate'}, langs=langs,
+         lang_names=join(names, 'or'), lang_names_and=join(names, 'and'))
 
     shutil.copytree(os.path.join(HERE, 'assets'), os.path.join(out, 'assets'))
     io.open(os.path.join(out, 'robots.txt'), 'w', newline='\n').write(f'User-agent: *\nAllow: /\n\nSitemap: {site["base_url"]}/sitemap.xml\n')

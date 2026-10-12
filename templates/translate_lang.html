@@ -2,7 +2,7 @@
 {% macro table(rows, firmware) -%}
 <div class="tr-table" role="table">
 <div class="tr-row tr-head" role="row"><span role="columnheader">Key</span><span role="columnheader">English</span><span role="columnheader">{{ l.native }} today</span><span role="columnheader"></span></div>
-{% for r in rows %}<div class="tr-row" role="row"><span class="tr-key">{{ r.key }}</span><span>{{ r.en }}</span><span>{% if r.cur %}{{ r.cur }}{% else %}<em>missing</em>{% endif %}{% if firmware %}<span class="tr-len">{{ r.cur|length }} chars, longest today {{ r.longest }}</span>{% endif %}</span><a href="{{ r.issue }}">Suggest a fix</a></div>
+{% for r in rows %}<div class="tr-row" role="row"><span class="tr-key">{{ r.key }}</span><span>{{ r.en }}</span><span>{% if r.cur %}{{ r.cur }}{% else %}<em>missing</em>{% endif %}{% if firmware %}<span class="tr-len">{{ r.cur|length }} chars{% if r.longest %}, longest today {{ r.longest }}{% endif %}</span>{% endif %}</span><a href="{{ r.issue }}">Suggest a fix</a></div>
 {% endfor %}</div>
 {%- endmacro %}
 {% block main %}
@@ -13,7 +13,8 @@
       <p class="lead">Read the screens, then fix what sounds wrong. One string at a time with the buttons below, or a full pass in the spreadsheet.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="/translate/files/pocketobi-{{ l.code }}.csv" download><span class="i i-down" aria-hidden="true"></span> PocketOBI strings (CSV)</a>
-        <a class="btn btn-plain" href="/translate/files/packscope-{{ l.code }}.csv" download><span class="i i-down" aria-hidden="true"></span> PackScope strings (CSV)</a>
+{% if ps %}        <a class="btn btn-plain" href="/translate/files/packscope-{{ l.code }}.csv" download><span class="i i-down" aria-hidden="true"></span> PackScope strings (CSV)</a>
+{% endif %}
       </div>
     </div>
   </section>
@@ -21,9 +22,11 @@
   <section class="section" id="pocketobi">
     <div class="wrap">
       <h2>PocketOBI, the device</h2>
-      <p>The device screen only has plain ASCII letters: no accents, no umlauts (write ae, oe, ue, ss), and limited width. Keep a fix close to the length of the longest version shown today; we render every accepted fix on the real screen before it ships.</p>
+{% if l.cjk %}      <p>The device draws {{ l.name }} with its own small font, in limited width. Keep a fix close to the length of the text shown today; we render every accepted fix on the real screen before it ships.</p>
+{% else %}      <p>The device screen only has plain ASCII letters: no accents, no umlauts (write ae, oe, ue, ss), and limited width. Keep a fix close to the length of the longest version shown today; we render every accepted fix on the real screen before it ships.</p>
+{% endif %}
       <figure style="margin:24px 0">
-        <a href="/assets/img/translate/po-{{ l.code }}-sheet.png"><img class="screen soft" src="/assets/img/translate/po-{{ l.code }}-sheet.png" alt="Every PocketOBI screen in {{ l.name }}" width="1984" height="4208" loading="lazy" style="max-height:640px;object-fit:cover;object-position:top"></a>
+        <a href="/assets/img/translate/po-{{ l.code }}-sheet.png"><img class="screen soft" src="/assets/img/translate/po-{{ l.code }}-sheet.png" alt="Every PocketOBI screen in {{ l.name }}" width="{{ l.sheet_w }}" height="{{ l.sheet_h }}" loading="lazy" style="max-height:640px;object-fit:cover;object-position:top"></a>
         <figcaption>Every screen in {{ l.name }}, on a sample battery. Click for the full sheet.</figcaption>
       </figure>
       <details open><summary>All {{ fw|length }} device strings</summary>
@@ -32,6 +35,7 @@
     </div>
   </section>
 
+{% if ps %}
   <section class="section" id="packscope">
     <div class="wrap">
       <h2>PackScope, the PC app</h2>
@@ -45,4 +49,12 @@
       </details>
     </div>
   </section>
+{% else %}
+  <section class="section" id="packscope">
+    <div class="wrap">
+      <h2>PackScope, the PC app</h2>
+      <p>PackScope is not in {{ l.name }} yet. Only the device strings need a review here.</p>
+    </div>
+  </section>
+{% endif %}
 {% endblock %}

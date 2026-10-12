@@ -27,7 +27,7 @@
     <div class="wrap">
       <h2>Pick a language</h2>
       <ul class="doc-links">
-{% for l in langs %}        <li><a href="/translate/{{ l.code }}/"><span class="i i-right" aria-hidden="true"></span><span>{{ l.native }}</span></a> <span class="where">{{ l.name }}: {{ l.n_fw }} device strings, {{ l.n_ps }} app strings</span></li>
+{% for l in langs %}        <li><a href="/translate/{{ l.code }}/"><span class="i i-right" aria-hidden="true"></span><span>{{ l.native }}</span></a> <span class="where">{{ l.name }}: {{ l.n_fw }} device strings{% if l.n_ps %}, {{ l.n_ps }} app strings{% else %}, device only{% endif %}</span></li>
 {% endfor %}      </ul>
     </div>
   </section>

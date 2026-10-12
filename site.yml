@@ -17,6 +17,7 @@ nav:
   - {key: guides, label: Guides, href: /guides/}
   - {key: pocketobi, label: PocketOBI, href: /pocketobi/}
   - {key: packscope, label: PackScope, href: /packscope/}
+  - {key: translate, label: Help translate, href: /translate/}
   - {key: about, label: About, href: /about/}
 
 footer:
@@ -36,6 +37,9 @@ translate:
   languages:
     de: {name: German, native: Deutsch}
     es: {name: Spanish, native: Español}
+    # Japanese: device only (PackScope has no Japanese catalog). Its strings are a separate table,
+    # strings_ja.h, drawn with the CJK font, so no ASCII rule.
+    ja: {name: Japanese, native: 日本語, firmware: strings_ja.h, packscope: false}
   sources:
     PocketOBI: {file: strings_i18n.h, kind: strtab}
     PackScope: {dir: packscope/locales, kind: json}
