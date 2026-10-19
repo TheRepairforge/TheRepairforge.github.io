@@ -4,7 +4,7 @@
     <div class="wrap">
       <div>
         <h1>Do you speak {{ lang_names }}? Help fix the translations.</h1>
-        <p class="lead">PocketOBI and PackScope speak several languages. English and French are ours; {{ lang_names_and }} are first drafts no native speaker has checked yet.</p>
+        <p class="lead">PocketOBI and PackScope speak several languages. English and French are ours; {{ lang_drafts }} are first drafts no native speaker has checked yet.{% if lang_natives %} {{ lang_natives }} was written by a native speaker: a second pair of eyes is still welcome.{% endif %}</p>
         <div class="actions"><a class="btn btn-primary" href="#languages">Pick a language <span class="i i-right" aria-hidden="true"></span></a></div>
       </div>
       <figure><img class="screen" src="/assets/img/screens/po-repair-lock.png" alt="A PocketOBI repair screen" width="640" height="480"></figure>

@@ -37,9 +37,13 @@ translate:
   languages:
     de: {name: German, native: Deutsch}
     es: {name: Spanish, native: Español}
-    # Japanese: device only (PackScope has no Japanese catalog). Its strings are a separate table,
-    # strings_ja.h, drawn with the CJK font, so no ASCII rule.
+    # Japanese, Korean: device only (PackScope has no catalog for them). Separate tables
+    # (strings_ja.h, strings_ko.h) drawn with the CJK font, so no ASCII rule. Asia build (PocketOBI 2.5).
     ja: {name: Japanese, native: 日本語, firmware: strings_ja.h, packscope: false}
+    ko: {name: Korean, native: 한국어, firmware: strings_ko.h, packscope: false}
+    # Vietnamese: device only, a separate table but plain ASCII like DE/ES (ascii: true), written by a
+    # Vietnamese user (by_native: true), so not called a first draft. Asia build (PocketOBI 2.5).
+    vi: {name: Vietnamese, native: Tiếng Việt, firmware: strings_vi.h, packscope: false, ascii: true, by_native: true}
   sources:
     PocketOBI: {file: strings_i18n.h, kind: strtab}
     PackScope: {dir: packscope/locales, kind: json}
