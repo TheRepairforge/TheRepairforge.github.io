@@ -6,7 +6,7 @@ platform: LXT 18 V
 nav_label: Makita LXT
 line:
   repo: PocketOBI
-  release: v2.5.1
+  release: v2.5.2
 boards:
 - esp32-c3
 - cyd
