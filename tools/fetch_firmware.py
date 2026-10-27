@@ -17,7 +17,7 @@ import yaml
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(HERE, '_site')
-CHIP_FAMILY = {'esp32c3': 'ESP32-C3', 'esp32': 'ESP32'}   # esptool chip -> ESP Web Tools chipFamily
+CHIP_FAMILY = {'esp32c3': 'ESP32-C3', 'esp32': 'ESP32', 'esp32s3': 'ESP32-S3'}   # esptool chip -> ESP Web Tools chipFamily
 
 
 def get(url, binary=False):

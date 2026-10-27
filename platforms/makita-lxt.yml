@@ -10,6 +10,7 @@ line:
 boards:
 - esp32-c3
 - cyd
+- es3c28p
 title: Unlock or reset a Makita LXT battery safely
 og_image: /assets/img/og-makita-lxt.jpg
 description: Makita LXT battery flashing red and green on the charger? See what PocketOBI reads on an LXT 18 V battery, whether it can be saved, and what the unlock fixes.
