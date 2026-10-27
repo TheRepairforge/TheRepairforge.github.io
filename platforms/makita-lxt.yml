@@ -51,6 +51,7 @@ sections:
             <ul class="doc-links">
               <li><a href="https://github.com/TheRepairforge/PocketOBI#wiring"><span class="i i-out" aria-hidden="true"></span><span>Wiring, in the README</span></a> <span class="where">PocketOBI / README.md</span></li>
               <li><a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/CYD_GUIDE.md"><span class="i i-out" aria-hidden="true"></span><span>Wiring on a CYD</span></a> <span class="where">PocketOBI / docs / CYD_GUIDE.md</span></li>
+              <li><a href="https://github.com/TheRepairforge/PocketOBI#alternative-board-es3c28p-esp32-s3"><span class="i i-out" aria-hidden="true"></span><span>Wiring on an ES3C28P</span></a> <span class="where">PocketOBI / README.md</span></li>
             </ul>
           </div>
         </div>
