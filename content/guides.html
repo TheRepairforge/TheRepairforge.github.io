@@ -79,7 +79,7 @@ nav: guides
       </figure>
       <div class="body">
         <h2>Build it on an ES3C28P</h2>
-        <p>Since PocketOBI 2.6, the firmware also runs on the ES3C28P, a 2.8" ESP32-S3 board with a capacitive touch screen. Same screens as the CYD, driven by touch. Its LiPo charger lets it run from a small cell instead of a USB cable.</p>
+        <p>Since PocketOBI 2.6, the firmware also runs on the ES3C28P, a 2.8" ESP32-S3 board with a capacitive touch screen. Same screens as the CYD, driven by touch. It also has a LiPo charger and a battery socket, but running it from a cell instead of USB is not tested yet.</p>
         <p class="need"><b>You need:</b> an ES3C28P, two 470&nbsp;&Omega; resistors, two 1.25&nbsp;mm socket leads and an LXT adapter.</p>
         <p><strong>The one trap:</strong> no single socket carries both the bus and 3.3&nbsp;V, so DATA and ENABLE come from Expand, 3.3&nbsp;V and ground from I2C. Leave the touch pins on I2C alone, and B+ is never connected.</p>
         <ul class="doc-links">
