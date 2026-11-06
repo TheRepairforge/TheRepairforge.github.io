@@ -45,6 +45,11 @@ translate:
     # Vietnamese: device only, a separate table but plain ASCII like DE/ES (ascii: true), written by a
     # Vietnamese user (by_native: true), so not called a first draft. Asia build (PocketOBI 2.5).
     vi: {name: Vietnamese, native: Tiếng Việt, firmware: strings_vi.h, packscope: false, ascii: true, by_native: true}
+  # /translate/new/ ("add your language"): every language the published tools already speak (the review
+  # list above is a subset), and requests already under way, so nobody starts one twice.
+  shipped: [English, French, German, Spanish, Japanese, Korean, Vietnamese, Simplified Chinese, Traditional Chinese]
+  in_progress:
+    - {name: Russian, href: "https://github.com/TheRepairforge/PocketOBI/issues/37"}
   sources:
     PocketOBI: {file: strings_i18n.h, kind: strtab}
     PackScope: {dir: packscope/locales, kind: json}

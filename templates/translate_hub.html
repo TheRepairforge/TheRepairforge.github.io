@@ -5,7 +5,7 @@
       <div>
         <h1>Do you speak {{ lang_names }}? Help fix the translations.</h1>
         <p class="lead">PocketOBI and PackScope speak several languages. English and French are ours; {{ lang_drafts }} are first drafts no native speaker has checked yet.{% if lang_natives %} {{ lang_natives }} was written by a native speaker: a second pair of eyes is still welcome.{% endif %}</p>
-        <div class="actions"><a class="btn btn-primary" href="#languages">Pick a language <span class="i i-right" aria-hidden="true"></span></a></div>
+        <div class="actions btn-row"><a class="btn btn-primary" href="#languages">Pick a language <span class="i i-right" aria-hidden="true"></span></a> <a class="btn btn-plain" href="/translate/new/">Add a new language</a></div>
       </div>
       <figure><img class="screen" src="/assets/img/screens/po-repair-lock.png" alt="A PocketOBI repair screen" width="640" height="480"></figure>
     </div>
@@ -29,6 +29,7 @@
       <ul class="doc-links">
 {% for l in langs %}        <li><a href="/translate/{{ l.code }}/"><span class="i i-right" aria-hidden="true"></span><span>{{ l.native }}</span></a> <span class="where">{{ l.name }}: {{ l.n_fw }} device strings{% if l.n_ps %}, {{ l.n_ps }} app strings{% else %}, device only{% endif %}</span></li>
 {% endfor %}      </ul>
+      <p style="margin-top:28px"><strong>Your language is not in the list?</strong> <a href="/translate/new/">Add it</a>: download the English strings and screens, translate them, and we put them on the device.</p>
     </div>
   </section>
 {% endblock %}

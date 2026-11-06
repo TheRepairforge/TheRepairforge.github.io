@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block main %}
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="muted"><a href="/translate/">Help translate</a></p>
+        <h1>Your language is not here? Add it.</h1>
+        <p class="lead">PocketOBI and PackScope are translated by the people who use them. If your language is missing, you can bring it: translate the English, and we put it on the screen and check it with you before it ships.</p>
+        <div class="actions btn-row">
+          <a class="btn btn-primary" href="#files">Get the English files <span class="i i-right" aria-hidden="true"></span></a>
+          <a class="btn btn-plain" href="#alphabet">What your alphabet means</a>
+        </div>
+      </div>
+      <figure><img class="screen" src="/assets/img/screens/po-launcher.png" alt="The PocketOBI home screen in English" width="640" height="480"></figure>
+    </div>
+  </section>
+
+  <section class="section" id="already">
+    <div class="wrap">
+      <h2>Already there</h2>
+      <p>The tools already speak {% for n in shipped %}{% if not loop.first %}{% if loop.last %} and {% else %}, {% endif %}{% endif %}{{ n }}{% endfor %}. If yours is one of them, <a href="/translate/#languages">review it instead</a>: a second pair of eyes is worth as much as a new language.</p>
+{% if in_progress %}      <p>Under way, a translator is wanted or already on it:</p>
+      <ul class="doc-links">
+{% for p in in_progress %}        <li><a href="{{ p.href }}"><span class="i i-out" aria-hidden="true"></span><span>{{ p.name }}</span></a></li>
+{% endfor %}      </ul>
+{% endif %}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <div class="checks">
+        <div><h3>Say you are starting</h3><p>Open an issue with your language first, even before you translate a word. Then nobody does the same work twice, and we can tell you early if your alphabet needs work on the device (see below).</p></div>
+        <div><h3>Translate the spreadsheet</h3><p>Every string comes with its key and the English text, and the device ones with a length guide: the longest version used today, in characters. Fill the <code>your_translation</code> column, and write any question in <code>note</code>. Look at the English screens while you do it: a word means more next to the screen it sits on.</p></div>
+        <div><h3>Check it on the screens</h3><p>We build your language, render every screen and send you the sheet, so you see your text where it lands before anything is released. Too long somewhere? We come back to you with the place it goes. You are credited in the release notes if you want to be.</p></div>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="{{ issue_fw }}"><span class="i i-out" aria-hidden="true"></span> New language for PocketOBI</a>
+        <a class="btn btn-plain" href="{{ issue_ps }}"><span class="i i-out" aria-hidden="true"></span> New language for PackScope</a>
+      </div>
+      <p class="muted">You need a free GitHub account to open an issue. Doing both? One issue is enough: say so in it and attach both spreadsheets.</p>
+    </div>
+  </section>
+
+  <section class="section" id="files">
+    <div class="wrap">
+      <h2>The English files</h2>
+      <h3>PocketOBI, the device: {{ n_fw }} strings</h3>
+      <p>Every string on the screen, with its length guide. Keep <code>%d</code> and <code>%s</code> exactly as they are: the device puts a number or a name there.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="/translate/files/pocketobi-new.csv" download><span class="i i-down" aria-hidden="true"></span> PocketOBI strings (CSV)</a>
+        <a class="btn btn-plain" href="/assets/img/translate/po-en-sheet.png" download><span class="i i-down" aria-hidden="true"></span> Every screen in English (PNG)</a>
+      </div>
+      <figure style="margin:24px 0">
+        <a href="/assets/img/translate/po-en-sheet.png"><img class="screen soft" src="/assets/img/translate/po-en-sheet.png" alt="Every PocketOBI screen in English" width="{{ sheet_w }}" height="{{ sheet_h }}" loading="lazy" style="max-height:640px;object-fit:cover;object-position:top"></a>
+        <figcaption>Every screen in English, on a sample battery. Click for the full sheet.</figcaption>
+      </figure>
+
+      <h3 id="packscope">PackScope, the PC app: {{ n_ps }} strings</h3>
+      <p>No length limit here, and the PC shows accents and full words. Placeholders like <code>%d</code>, <code>%s</code> or <code>{name}</code> stay as they are.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="/translate/files/packscope-new.csv" download><span class="i i-down" aria-hidden="true"></span> PackScope strings (CSV)</a>
+      </div>
+      <div class="screen-pair" style="margin:24px 0">
+        <figure><img class="screen soft" src="/assets/img/screens/ps-live.png" alt="PackScope live read in English" width="1380" height="888" loading="lazy"></figure>
+        <figure><img class="screen soft" src="/assets/img/screens/ps-repair-check.png" alt="PackScope repair wizard in English" width="1380" height="888" loading="lazy"></figure>
+      </div>
+      <p class="muted">The spreadsheets open in Excel, LibreOffice or Google Sheets. Save as CSV (UTF-8) and attach the file to your issue.</p>
+    </div>
+  </section>
+
+  <section class="section" id="alphabet">
+    <div class="wrap">
+      <h2>What your alphabet means for the device</h2>
+      <p>The device screen is small and its letters are drawn from built-in letter sets. That decides how fast a language can ship.</p>
+      <div class="checks">
+        <div><h3>Latin alphabet</h3><p>Polish, Italian, Dutch, Portuguese, Turkish, Czech... The fastest path: the device shows plain letters only, so accents are dropped, as French, Spanish and Vietnamese do today (write <code>a</code> for <code>ą</code>, <code>s</code> for <code>ş</code>). Once the translation is in, it can go out with the next release.</p></div>
+        <div><h3>Another alphabet</h3><p>Cyrillic, Greek... The device needs a letter set for it first, narrow enough for the text to fit. That is real work on our side, so it starts once a translation is in hand, and takes longer.</p></div>
+        <div><h3>Right-to-left or joined letters</h3><p>Arabic, Hebrew, Thai, Hindi... These need more than a letter set. Ask in an issue before you translate, so we can tell you honestly what is possible.</p></div>
+      </div>
+      <p>PackScope has none of these limits for alphabets your PC already displays. The full guides, with the rules each tool follows, are on GitHub: <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/TRANSLATING.md">PocketOBI</a> and <a href="https://github.com/TheRepairforge/PackScope/blob/main/docs/TRANSLATING.md">PackScope</a>.</p>
+    </div>
+  </section>
+{% endblock %}

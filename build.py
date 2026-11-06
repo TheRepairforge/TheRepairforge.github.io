@@ -89,6 +89,22 @@ def write_csv(path, rows, code, firmware):
             w.writerow(line)
 
 
+def write_new_csv(path, rows, firmware):
+    """English source for a new language: the translator fills your_translation (and note for a question)."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with io.open(path, 'w', encoding='utf-8-sig', newline='') as f:
+        w = csv.writer(f)
+        w.writerow(['key', 'english'] + (['length_guide (chars)'] if firmware else []) + ['your_translation', 'note'])
+        for r in rows:
+            w.writerow([r['key'], r['en']] + ([r['longest']] if firmware else []) + ['', ''])
+
+
+def new_issue_url(site, repo):
+    q = {'template': 'translation.yml', 'title': '[NEW] Language: ', 'key': '',
+         'english': 'All strings (new language)', 'current': 'None yet'}
+    return f'https://github.com/{site["github_owner"]}/{repo}/issues/new?' + urllib.parse.urlencode(q, quote_via=urllib.parse.quote)
+
+
 # ------------------------------------------------------------------ build
 def main():
     ap = argparse.ArgumentParser()
@@ -173,6 +189,20 @@ def main():
         emit('translate_lang.html', {'title': f'Review the {meta["name"]} translation of {tools}', 'title_suffix': True,
                                      'description': f'Native {meta["name"]} speakers: check the {tools} strings and suggest fixes on GitHub.',
                                      'path': f'translate/{code}/', 'nav': 'translate'}, l=l, fw=fw, ps=ps)
+    # a new language (/translate/new/): the English source as an empty sheet, the columns JP posts on a
+    # language request (key, english, length guide, translation, note), plus the English screens
+    fw_new = [{'key': r['key'], 'en': r['EN'], 'longest': max(len(r[c]) for c in ('EN', 'FR', 'DE', 'ES'))} for r in fw_raw]
+    ps_new = [{'key': k, 'en': v} for k, v in ps_en.items()]
+    write_new_csv(os.path.join(out, 'translate', 'files', 'pocketobi-new.csv'), fw_new, True)
+    write_new_csv(os.path.join(out, 'translate', 'files', 'packscope-new.csv'), ps_new, False)
+    with open(os.path.join(HERE, 'assets', 'img', 'translate', 'po-en-sheet.png'), 'rb') as f:
+        sheet = struct.unpack('>II', f.read(24)[16:24])
+    emit('translate_new.html', {'title': 'Add your language to PocketOBI and PackScope', 'title_suffix': True,
+                                'description': 'Your language is missing? Download the English strings and screens, translate them, and we put them on the screen.',
+                                'path': 'translate/new/', 'nav': 'translate'},
+         n_fw=len(fw_new), n_ps=len(ps_new), sheet_w=sheet[0], sheet_h=sheet[1], shipped=tr['shipped'],
+         in_progress=tr.get('in_progress', []), issue_fw=new_issue_url(site, 'PocketOBI'), issue_ps=new_issue_url(site, 'PackScope'))
+
     names = [l['name'] for l in langs]
     def join(w, last):
         return w[0] if len(w) == 1 else ', '.join(w[:-1]) + f' {last} ' + w[-1]
