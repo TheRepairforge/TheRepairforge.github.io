@@ -12,7 +12,7 @@ Chip and offsets come from the OFFSETS.txt that the tool's release script puts i
 Fails when a Release carries no parts, or when a platform's board has no build in it: the
 previous deployment stays live, never a flasher pointing at nothing.
 """
-import glob, hashlib, io, json, os, re, sys, urllib.request, zipfile
+import glob, hashlib, io, json, os, re, sys, urllib.parse, urllib.request, zipfile
 import yaml
 
 HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +21,12 @@ CHIP_FAMILY = {'esp32c3': 'ESP32-C3', 'esp32': 'ESP32', 'esp32s3': 'ESP32-S3'}  
 
 
 def get(url, binary=False):
-    req = urllib.request.Request(url, headers={'User-Agent': 'fetch_firmware', 'Accept': 'application/octet-stream' if binary else 'application/vnd.github+json'})
+    headers = {'User-Agent': 'fetch_firmware', 'Accept': 'application/octet-stream' if binary else 'application/vnd.github+json'}
+    # Token on the API only: anonymous, its 60/hour limit is shared with every job on the runner's IP.
+    # Asset downloads redirect to a storage host that must not receive it.
+    if os.environ.get('GITHUB_TOKEN') and urllib.parse.urlparse(url).hostname == 'api.github.com':
+        headers['Authorization'] = 'Bearer ' + os.environ['GITHUB_TOKEN']
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=120) as r:
         return r.read()
 

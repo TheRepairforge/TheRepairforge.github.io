@@ -19,6 +19,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ github.token }}   # authenticated GitHub API calls (rate limit), read-only here
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7

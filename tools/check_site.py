@@ -105,7 +105,12 @@ def gh_slug(heading):
 
 
 def get(url):
-    req = urllib.request.Request(url, headers={'User-Agent': 'check_site', 'Accept': 'application/vnd.github+json'})
+    headers = {'User-Agent': 'check_site', 'Accept': 'application/vnd.github+json'}
+    # Authenticated, the API allows 1000 requests/hour for this repository; anonymous, 60/hour
+    # shared with every job on the runner's IP, which fails a run now and then with a 403.
+    if os.environ.get('GITHUB_TOKEN') and urllib.parse.urlparse(url).hostname == 'api.github.com':
+        headers['Authorization'] = 'Bearer ' + os.environ['GITHUB_TOKEN']
+    req = urllib.request.Request(url, headers=headers)
     with urllib.request.urlopen(req, timeout=30) as r:
         return r.read().decode('utf-8')
 
