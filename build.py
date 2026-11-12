@@ -168,7 +168,7 @@ def main():
     langs = []
     for code, meta in tr['languages'].items():
         sep = 'firmware' in meta                 # its own table file (strings_<code>.h), one literal per StrId
-        cjk = sep and not meta.get('ascii')      # drawn with the CJK font: no ASCII rule, no width column
+        cjk = sep and not meta.get('latin')      # drawn with the CJK font: no width column
         cur = strtab_ja(fetch(site, 'PocketOBI', meta['firmware'], args.offline), fw_raw) if sep else {r['key']: r[code.upper()] for r in fw_raw}
         fw = [{'key': r['key'], 'en': r['EN'], 'cur': cur[r['key']],
                'longest': '' if cjk else max(len(r[c]) for c in ('EN', 'FR', 'DE', 'ES')),

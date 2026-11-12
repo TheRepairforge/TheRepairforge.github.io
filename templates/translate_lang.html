@@ -23,7 +23,7 @@
     <div class="wrap">
       <h2>PocketOBI, the device</h2>
 {% if l.cjk %}      <p>The device draws {{ l.name }} with its own small font, in limited width. Keep a fix close to the length of the text shown today; we render every accepted fix on the real screen before it ships.</p>
-{% else %}      <p>The device screen only has plain ASCII letters: no accents, no umlauts (write ae, oe, ue, ss), and limited width. Keep a fix close to the length of the longest version shown today; we render every accepted fix on the real screen before it ships.</p>
+{% else %}      <p>The device draws accented letters (é, ü, ñ, ł, ...) as the plain letter plus small marks, at the plain letter's width, so accents are welcome; the width is limited. Keep a fix close to the length of the longest version shown today; we render every accepted fix on the real screen before it ships.</p>
 {% endif %}
       <figure style="margin:24px 0">
         <a href="/assets/img/translate/po-{{ l.code }}-sheet.png"><img class="screen soft" src="/assets/img/translate/po-{{ l.code }}-sheet.png" alt="Every PocketOBI screen in {{ l.name }}" width="{{ l.sheet_w }}" height="{{ l.sheet_h }}" loading="lazy" style="max-height:640px;object-fit:cover;object-position:top"></a>
