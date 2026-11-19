@@ -11,11 +11,11 @@ boards:
 - esp32-c3
 - cyd
 - es3c28p
-title: Unlock or reset a Makita LXT battery safely
+title: 'Makita LXT battery reset tool: unlock it safely'
 og_image: /assets/img/og-makita-lxt.jpg
-description: Makita LXT battery flashing red and green on the charger? See what PocketOBI reads on an LXT 18 V battery, whether it can be saved, and what the unlock fixes.
+description: Makita LXT battery flashing red and green on the charger? A reset tool that reads the battery first, tells you whether it can be saved, and unlocks it only when the lock is a false one.
 hero:
-  h1: 'Makita LXT battery tester: read it, check it, unlock it.'
+  h1: 'Makita LXT battery reset tool and tester: read it, check it, unlock it.'
   lead: Charger flashing red and green? See what the battery remembers, whether it can be saved, and what the unlock fixes.
   cta:
     label: Build a PocketOBI

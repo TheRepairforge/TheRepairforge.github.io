@@ -1,7 +1,7 @@
 ---
-title: "PocketOBI: a DIY Makita LXT battery tester and unlocker"
+title: "PocketOBI: DIY Makita battery reset tool and tester"
 title_suffix: true
-description: "PocketOBI reads Makita LXT 18 V batteries, gives a verdict and clears false lockouts. Build it on an ESP32-C3, a CYD or an ES3C28P, then flash it from your browser."
+description: "A Makita battery reset tool and tester you build yourself: PocketOBI reads LXT 18 V batteries, gives a verdict and clears false lockouts. No PC. Build it on an ESP32 board, flash it from your browser."
 og_image: /assets/img/og-pocketobi.jpg
 path: "pocketobi/"
 nav: pocketobi
@@ -11,7 +11,7 @@ nav: pocketobi
       <div>
         <img class="tool-logo logo-dark" src="/assets/img/pocketobi-dark.png" alt="PocketOBI" width="900" height="163" style="height:44px;width:auto;margin-bottom:28px">
         <img class="tool-logo logo-light" src="/assets/img/pocketobi-light.png" alt="PocketOBI" width="900" height="163" style="height:44px;width:auto;margin-bottom:28px">
-        <h1>A Makita battery tester you build yourself.</h1>
+        <h1>A Makita battery reset tool and tester you build yourself.</h1>
         <p class="lead">Reads Makita LXT 18&nbsp;V batteries, gives one verdict, and clears false lockouts. An ESP32, a screen and a knob. No PC.</p>
         <div class="actions btn-row">
           <a class="btn btn-primary" href="/guides/#build">Build guide <span class="i i-right" aria-hidden="true"></span></a>
@@ -19,6 +19,31 @@ nav: pocketobi
         </div>
       </div>
       <figure><img class="screen" src="/assets/img/screens/po-launcher.png" alt="PocketOBI home screen: Battery, Repair, Tools, About" width="640" height="480" loading="lazy"></figure>
+    </div>
+  </section>
+
+  <section class="section" id="buy-or-build">
+    <div class="wrap">
+      <h2>Can I buy a ready-made Makita battery reset tool?</h2>
+      <p>Not from us: PocketOBI is a build-it-yourself project, and there is no shop. Here is how it compares with what you can buy.</p>
+      <div class="do-dont">
+        <div>
+          <h3>What you can buy</h3>
+          <ul class="reads">
+            <li><strong>Makita's own battery checker.</strong> A service-centre tool: it reads a battery's state, but it does not clear a lockout.</li>
+            <li><strong>Ready-made unlock adapters</strong>, sold online. Most build on the same Open Battery Information protocol work as PocketOBI and run from a PC or a phone. Check what the seller supports before you order.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What you build</h3>
+          <ul class="reads">
+            <li><strong>Standalone.</strong> A screen and a knob or a touch screen: no PC, no phone, no app.</li>
+            <li><strong>Reads first, writes last.</strong> One verdict from what the BMS remembers, and the unlock only when the lock is a false one.</li>
+            <li><strong>The least soldering:</strong> a ready-made <a href="#boards">CYD or ES3C28P board</a>, an LXT adapter and a few parts, then <a href="#flash">flash it from your browser</a>.</li>
+            <li><strong>The reference build:</strong> the carrier PCB, <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/hardware/ORDERING.md">ready to order from PCBWay</a>.</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
