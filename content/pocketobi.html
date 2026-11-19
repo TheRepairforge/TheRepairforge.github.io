@@ -76,7 +76,7 @@ nav: pocketobi
           <esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3-asia/manifest.json"><button slot="activate" class="link-btn">ESP32-C3</button><span slot="unsupported">ESP32-C3</span><span slot="not-allowed">ESP32-C3</span></esp-web-install-button>
           <span class="muted">or</span>
           <esp-web-install-button manifest="/firmware/PocketOBI/cyd-asia/manifest.json"><button slot="activate" class="link-btn">CYD</button><span slot="unsupported">CYD</span><span slot="not-allowed">CYD</span></esp-web-install-button>.
-          The other builds carry English, French, German, Spanish and Polish; the ES3C28P build adds Vietnamese.</p>
+          The other builds carry English, French, German, Spanish, Polish and Russian; the ES3C28P build adds Vietnamese.</p>
         <script type="module" src="/vendor/esp-web-tools/install-button.js"></script>
         <p class="note">Works in Chrome and Edge on a computer. Anywhere else, download the firmware from the <a href="https://github.com/TheRepairforge/PocketOBI/releases/latest">latest release</a> and flash it with esptool, or <a href="https://github.com/TheRepairforge/PocketOBI#build--flash">build it from source</a>.</p>
         <p class="note">Firmware licensed <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>. <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/THIRD-PARTY.md">Third-party components</a>.</p>
@@ -87,7 +87,9 @@ nav: pocketobi
         <li><strong>Board not detected.</strong> On the ESP32-C3, hold BOOT while plugging it in. On Windows the CYD may need the CH340 USB driver. The ES3C28P needs no driver; if it is not seen, hold BOOT, press RESET, then release BOOT.</li>
         <li><strong>Mirrored image on the CYD</strong> (text reads right to left, the title bar looks olive green). Some CYDs have an ILI9341 screen: install
           <esp-web-install-button manifest="/firmware/PocketOBI/cyd-ili9341/manifest.json"><button slot="activate" class="link-btn">the ILI9341 build</button><span slot="unsupported">the <code>cyd-ili9341</code> file from the release</span><span slot="not-allowed">the <code>cyd-ili9341</code> file from the release</span></esp-web-install-button>
-          instead, then run Settings &gt; Calibrate touch once. Details in the <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/CYD_GUIDE.md">CYD guide</a>.</li>
+          instead (for Japanese, Korean, Vietnamese or Chinese:
+          <esp-web-install-button manifest="/firmware/PocketOBI/cyd-ili9341-asia/manifest.json"><button slot="activate" class="link-btn">the ILI9341 Asia build</button><span slot="unsupported">the <code>cyd-ili9341-asia</code> file from the release</span><span slot="not-allowed">the <code>cyd-ili9341-asia</code> file from the release</span></esp-web-install-button>),
+          then run Settings &gt; Calibrate touch once. Details in the <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/docs/CYD_GUIDE.md">CYD guide</a>.</li>
         <li><strong>Erase device</strong> wipes the saved language and the touch calibration. Leave it unticked for an update.</li>
         <li><strong>Which version is on it?</strong> The About screen shows it.</li>
       </ul>
