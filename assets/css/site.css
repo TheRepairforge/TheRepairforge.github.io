@@ -271,6 +271,20 @@ figcaption { color: var(--muted); font-size: 0.92rem; margin-top: 10px; }
 /* flasher */
 .flasher { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; margin-top: 28px; max-width: 760px; }
 .flasher .btn-row { margin: 18px 0; }
+.flash-grid { display: grid; grid-template-columns: auto 1fr 1fr; gap: 12px 20px; align-items: center; margin: 4px 0 18px; }
+.flash-grid .fg-corner { font-size: 0.82rem; color: var(--muted); align-self: end; padding-bottom: 6px; }
+.flash-grid .fg-head { font-weight: 700; align-self: stretch; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.flash-grid .fg-head span { display: block; font-weight: 400; font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+.flash-grid .fg-board { font-family: var(--mono); font-weight: 600; }
+.flash-grid .fg-extra { margin-left: 10px; font-size: 0.82rem; color: var(--muted); white-space: nowrap; }
+.flash-grid .fg-none { font-size: 0.85rem; color: var(--muted); }
+.flash-grid .btn { white-space: nowrap; }
+@media (max-width: 559px) {
+  .flash-grid { grid-template-columns: 1fr 1fr; }
+  .flash-grid .fg-corner { display: none; }
+  .flash-grid .fg-board { grid-column: 1 / -1; margin-top: 8px; }
+  .flash-grid .fg-extra { display: block; margin: 4px 0 0; }
+}
 .note { font-size: 0.93rem; color: var(--muted); }
 /* ESP Web Tools: before the script defines the element (or if it never loads), show only the
    activate buttons; once defined, the element itself shows the right slot. */

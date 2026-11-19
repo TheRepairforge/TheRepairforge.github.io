@@ -76,32 +76,31 @@ nav: pocketobi
   <section class="section" id="flash">
     <div class="wrap">
       <h2>Flash the firmware</h2>
-      <p>Plug the board in with a data USB cable, pick your board, click Install.</p>
+      <p>Plug the board in with a data USB cable. On your board's row, pick the languages: <strong>Standard</strong> for the European ones, <strong>Asia</strong> for Japanese, Korean, Vietnamese or Chinese. English is in both, and you choose the language on the device afterwards.</p>
       <div class="flasher">
         <!-- ESP Web Tools (PLAN.md 5.3): one manifest per build, written at deploy time by tools/fetch_firmware.py.
              Each manifest names one chip family, so a board of the wrong type is refused, not flashed. -->
-        <div class="btn-row">
-          <esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3/manifest.json">
-            <button slot="activate" class="btn btn-primary">Install on ESP32-C3</button>
-            <span slot="unsupported" class="note">This browser can't flash a board: use Chrome or Edge on a computer.</span>
-            <span slot="not-allowed" class="note">Flashing needs a secure (https) page.</span>
-          </esp-web-install-button>
-          <esp-web-install-button manifest="/firmware/PocketOBI/cyd/manifest.json">
-            <button slot="activate" class="btn btn-plain">Install on CYD</button>
-            <span slot="unsupported"></span>
-            <span slot="not-allowed"></span>
-          </esp-web-install-button>
-          <esp-web-install-button manifest="/firmware/PocketOBI/es3c28p/manifest.json">
-            <button slot="activate" class="btn btn-plain">Install on ES3C28P</button>
-            <span slot="unsupported"></span>
-            <span slot="not-allowed"></span>
-          </esp-web-install-button>
+        <!-- One row per board, one column per language set: the Asia build is a choice in plain sight,
+             not a link in a footnote. The ES3C28P has no Asia build (its standard build adds Vietnamese). -->
+        <div class="flash-grid">
+          <div class="fg-corner">Your board</div>
+          <div class="fg-head">Standard<span>English, Français, Deutsch, Español, Polski, Русский</span></div>
+          <div class="fg-head">Asia<span>English, 日本語, 한국어, Tiếng Việt, 中文</span></div>
+
+          <div class="fg-board">ESP32-C3</div>
+          <div><esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3/manifest.json"><button slot="activate" class="btn btn-primary">Install standard</button><span slot="unsupported"></span><span slot="not-allowed"></span></esp-web-install-button></div>
+          <div><esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3-asia/manifest.json"><button slot="activate" class="btn btn-primary">Install Asia</button><span slot="unsupported"></span><span slot="not-allowed"></span></esp-web-install-button></div>
+
+          <div class="fg-board">CYD</div>
+          <div><esp-web-install-button manifest="/firmware/PocketOBI/cyd/manifest.json"><button slot="activate" class="btn btn-primary">Install standard</button><span slot="unsupported"></span><span slot="not-allowed"></span></esp-web-install-button></div>
+          <div><esp-web-install-button manifest="/firmware/PocketOBI/cyd-asia/manifest.json"><button slot="activate" class="btn btn-primary">Install Asia</button><span slot="unsupported"></span><span slot="not-allowed"></span></esp-web-install-button></div>
+
+          <div class="fg-board">ES3C28P</div>
+          <div><esp-web-install-button manifest="/firmware/PocketOBI/es3c28p/manifest.json"><button slot="activate" class="btn btn-primary">Install standard</button><span slot="unsupported"></span><span slot="not-allowed"></span></esp-web-install-button><span class="fg-extra">+ Tiếng Việt</span></div>
+          <div class="fg-none">No Asia build</div>
         </div>
-        <p class="note">Asia firmware, English with Japanese, Korean, Vietnamese and Chinese (日本語, 한국어, Tiếng Việt, 中文):
-          <esp-web-install-button manifest="/firmware/PocketOBI/esp32-c3-asia/manifest.json"><button slot="activate" class="link-btn">ESP32-C3</button><span slot="unsupported">ESP32-C3</span><span slot="not-allowed">ESP32-C3</span></esp-web-install-button>
-          <span class="muted">or</span>
-          <esp-web-install-button manifest="/firmware/PocketOBI/cyd-asia/manifest.json"><button slot="activate" class="link-btn">CYD</button><span slot="unsupported">CYD</span><span slot="not-allowed">CYD</span></esp-web-install-button>.
-          The other builds carry English, French, German, Spanish, Polish and Russian; the ES3C28P build adds Vietnamese.</p>
+        <p class="note fg-nobrowser" hidden>This browser can't flash a board: use Chrome or Edge on a computer, on the https page.</p>
+        <script>if (!("serial" in navigator) || !window.isSecureContext) document.querySelector(".fg-nobrowser").hidden = false;</script>
         <script type="module" src="/vendor/esp-web-tools/install-button.js"></script>
         <p class="note">Works in Chrome and Edge on a computer. Anywhere else, download the firmware from the <a href="https://github.com/TheRepairforge/PocketOBI/releases/latest">latest release</a> and flash it with esptool, or <a href="https://github.com/TheRepairforge/PocketOBI#build--flash">build it from source</a>.</p>
         <p class="note">Firmware licensed <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>. <a href="https://github.com/TheRepairforge/PocketOBI/blob/main/THIRD-PARTY.md">Third-party components</a>.</p>
