@@ -50,9 +50,8 @@ translate:
     pl: {name: Polish, native: Polski, firmware: strings_pl.h, packscope: false, latin: true}
   # /translate/new/ ("add your language"): every language the published tools already speak (the review
   # list above is a subset), and requests already under way, so nobody starts one twice.
-  shipped: [English, French, German, Spanish, Polish, Japanese, Korean, Vietnamese, Simplified Chinese, Traditional Chinese]
-  in_progress:
-    - {name: Russian, href: "https://github.com/TheRepairforge/PocketOBI/issues/37"}
+  shipped: [English, French, German, Spanish, Polish, Russian, Japanese, Korean, Vietnamese, Simplified Chinese, Traditional Chinese]
+  in_progress: []
   sources:
     PocketOBI: {file: strings_i18n.h, kind: strtab}
     PackScope: {dir: packscope/locales, kind: json}
